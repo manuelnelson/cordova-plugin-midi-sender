@@ -40,16 +40,17 @@ NSString* receiveCallbackId;
             {
                 UInt8 status = packet->data[j];
                 
-                size = 2;
+                //size = 2;
+                size = 3;
                 
                 // @debug
-                NSLog(@"MIDISender:midiReceive: status %d received", status);
+                //NSLog(@"MIDISender:midiReceive: status %d received %d aaaaannd %d", status, packet->data[j + 1], packet->data[j + 2]);
+                
                 
                 // program change
-                if(status >= 192 && status <= 207)
-                {
+                if(status >= 192 && status <= 207){
                     // @debug
-                    NSLog(@"MIDISender:midiReceive: Program Change received: status %d on channel %d", packet->data[j + 1], status);
+                    //NSLog(@"MIDISender:midiReceive: Program Change received: status %d on channel %d", packet->data[j + 1], status);
 
                     // Create an object with a simple success property.
                     NSDictionary *jsonObj = [
@@ -65,7 +66,47 @@ NSString* receiveCallbackId;
                     [pluginResult setKeepCallbackAsBool:YES];
 
                     [midiSender.commandDelegate sendPluginResult:pluginResult callbackId:receiveCallbackId];
-                }
+                } else if(status >= 144 && status <= 159){ // Note
+                    // @debug
+                    //NSLog(@"MIDISender:midiReceive: Note received: status %d on channel %d", packet->data[j + 1], status);
+
+                    // Create an object with a simple success property.
+                    NSDictionary *jsonObj = [
+                        [NSDictionary alloc] initWithObjectsAndKeys: [NSString stringWithFormat:@"%d", status],
+                        @"channel",
+                        [NSString stringWithFormat:@"%d", packet->data[j + 1]],
+                        @"data",
+                        [NSString stringWithFormat:@"%d", packet->data[j + 2]],
+                        @"value",
+                        nil
+                    ];
+                    
+                    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK messageAsDictionary: jsonObj];
+                    
+                    [pluginResult setKeepCallbackAsBool:YES];
+
+                    [midiSender.commandDelegate sendPluginResult:pluginResult callbackId:receiveCallbackId];
+                } else if(status >= 176 && status <= 191){ // CC
+                   // @debug
+                    //NSLog(@"MIDISender:midiReceive: CC Channel %d Data %d Value %d", status, packet->data[j + 1], packet->data[j + 2]);
+
+                   // Create an object with a simple success property.
+                   NSDictionary *jsonObj = [
+                       [NSDictionary alloc] initWithObjectsAndKeys: [NSString stringWithFormat:@"%d", status],
+                       @"channel",
+                       [NSString stringWithFormat:@"%d", packet->data[j + 1]],
+                       @"data",
+                       [NSString stringWithFormat:@"%d", packet->data[j + 2]],
+                       @"value",
+                       nil
+                   ];
+                   
+                   CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK messageAsDictionary: jsonObj];
+                   
+                   [pluginResult setKeepCallbackAsBool:YES];
+
+                   [midiSender.commandDelegate sendPluginResult:pluginResult callbackId:receiveCallbackId];
+               }
             }
         }
     }
@@ -108,6 +149,82 @@ NSString* receiveCallbackId;
             {
                 // @debug
                 NSLog(@"MIDISender:sendProgramChange: Sending status %d to channel %d at destination %d", programNum, channelNum, i);
+                
+                MIDISend(outputPort, MIDIGetDestination(i), &packetList);
+            }
+            
+            // Create an object with a simple success property.
+            NSDictionary *jsonObj = [[NSDictionary alloc] initWithObjectsAndKeys: @"true", @"success", nil];
+            
+            CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK messageAsDictionary: jsonObj];
+        
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+        }];
+    }
+
+    - (void)sendNote:(CDVInvokedUrlCommand *)command
+       {
+           // run as background thread
+           [self.commandDelegate runInBackground:^{
+       
+               int channelNum = [[command.arguments objectAtIndex:0] intValue];
+               int programNum = [[command.arguments objectAtIndex:1] intValue];
+               int valueNum = [[command.arguments objectAtIndex:2] intValue];
+               
+               // Program Change
+               // see: http://www.midi.org/techspecs/midimessages.php
+               // Byte 1 - Channel #: 0xCn, n = channel number 0-F, channel 10 is represented by 0xCA
+               // Byte 2 - Program #: 1-128
+
+               const Byte message[] = {channelNum, programNum, valueNum};
+
+               MIDIPacketList packetList;
+               MIDIPacket *packet = MIDIPacketListInit(&packetList);
+               MIDIPacketListAdd(&packetList, sizeof(packetList), packet, 0, sizeof(message), message);
+
+               ItemCount destinationCount = MIDIGetNumberOfDestinations();
+               for(int i = 0; i < destinationCount; i++)
+               {
+                   // @debug
+                   //NSLog(@"MIDISender:sendProgramChange: Sending status %d to channel %d at destination %d", programNum, channelNum, i);
+                   
+                   MIDISend(outputPort, MIDIGetDestination(i), &packetList);
+               }
+               
+               // Create an object with a simple success property.
+               NSDictionary *jsonObj = [[NSDictionary alloc] initWithObjectsAndKeys: @"true", @"success", nil];
+               
+               CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK messageAsDictionary: jsonObj];
+           
+               [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+           }];
+       }
+
+    - (void)sendControlChange:(CDVInvokedUrlCommand *)command
+    {
+        // run as background thread
+        [self.commandDelegate runInBackground:^{
+    
+            int channelNum = [[command.arguments objectAtIndex:0] intValue];
+            int programNum = [[command.arguments objectAtIndex:1] intValue];
+            int valueNum = [[command.arguments objectAtIndex:2] intValue];
+            
+            // Program Change
+            // see: http://www.midi.org/techspecs/midimessages.php
+            // Byte 1 - Channel #: 0xCn, n = channel number 0-F, channel 10 is represented by 0xCA
+            // Byte 2 - Program #: 1-128
+
+            const Byte message[] = {channelNum, programNum, valueNum};
+
+            MIDIPacketList packetList;
+            MIDIPacket *packet = MIDIPacketListInit(&packetList);
+            MIDIPacketListAdd(&packetList, sizeof(packetList), packet, 0, sizeof(message), message);
+
+            ItemCount destinationCount = MIDIGetNumberOfDestinations();
+            for(int i = 0; i < destinationCount; i++)
+            {
+                // @debug
+                //NSLog(@"MIDISender:sendProgramChange: Sending status %d to channel %d at destination %d", programNum, channelNum, i);
                 
                 MIDISend(outputPort, MIDIGetDestination(i), &packetList);
             }

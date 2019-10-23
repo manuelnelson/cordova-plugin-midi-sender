@@ -1,12 +1,13 @@
-MIDISender
+MIDISender (modified)
 ======
 
-This plugin was developed with the intent of sending and receiving Program Change messages between the cordova app and attached hardware devices. It currently does not support other MIDI messages or other interfaces, such as virtual I/O. Should that be needed, this plugin may still be a good starting point.
+This is a fork of [cordova-plugin-midi-sender](https://github.com/jonathanwkelly/cordova-plugin-midi-sender). I added the ability to send/receive MIDI **note** and **CC** message types to [Jonathan's](https://github.com/jonathanwkelly) work.
+
 
 Installation
 -------
 
-	cordova plugin add https://github.com/jonathanwkelly/cordova-plugin-midi-sender.git
+	cordova plugin add https://github.com/josiaho/cordova-plugin-midi-sender.git
 
 Dependencies
 -------
@@ -17,26 +18,31 @@ Dependencies
 Methods
 -------
 
-	/**
-	 * Sends a program change to all connected devices
-	 * 
-	 * @param number channelNum
-	 * @param number statusData
-	 * @return void
-	 */
-	cordova.MIDISender.sendProgramChange(channelNum, statusData);
-
-	/**
-	 * Listens for incoming program change message from all connected sources
-	 * 
-	 * @param function callback Is passed an object containing two properties {channel: <number>, data: <number>}
-	 * @return void
-	 */
-	cordova.MIDISender.getIncoming(function(pc)
-	{
-		console.log(pc.channel); // 0-15
-		console.log(pc.data); 	 // 1-128
+**Listen for incoming MIDI messages on all channels:**
+	
+	cordova.plugins.MIDISender.getIncoming(function(msg) {
+	  if (msg.channel){ // Ignore msg sent on plugin initialization
+	  
+	    /* MESSAGE DATA
+	      msg.channel = MIDI channel (1-16)
+	      msg.type = Type of MIDI message: 'Program Change', 'Control Change', 'Note On', 'Note off'
+	      msg.data = MIDI Data: <number> for PC/CC (1-128), or Note (i.e. "C3") for Note On/Off
+	      msg.value = Not present for 'Program Change' messages
+	    */
+	    
+	  }
 	});
+	
+**Send MIDI Messages:**
+
+    // Send Program Change (Channel, Data)
+    cordova.plugins.MIDISender.sendProgramChange(1, 30);
+    
+    // Send NoteOn (Channel, Data, Value)
+    cordova.plugins.MIDISender.sendNote(1, 60, 127); // Ch 1, NoteOn C3, Value
+    
+    // Send Control Change (Channel, Data, Value)
+    cordova.plugins.MIDISender.sendControlChange(1, 1, 1);
 
 Permissions
 -----------
@@ -54,3 +60,8 @@ Resources
 -----------
 
 If you're unfamiliar with MIDI, checkout <a href="http://www.midi.org/techspecs/midimessages.php" target="_blank" title="MIDI Manufacturers Association">this spec</a> on MIDI messages.
+
+Credits
+-----------
+
+[Jonathan Kelly](https://github.com/jonathanwkelly/cordova-plugin-midi-sender)

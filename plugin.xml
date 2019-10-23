@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="com.jonathanwkelly.midisender" version="0.1.0">
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="cordova-plugin-midi-sender" version="0.1.0">
     <name>MIDISender</name>
     <description>Send and Receive MIDI messages through attached interfaces</description>
     <license>Apache 2.0</license>
     <keywords>MIDI,coreaudio,program,change</keywords>
-    <repo>https://github.com/jonathanwkelly/cordova-plugin-midi-sender.git</repo>
-    <issue>https://github.com/jonathanwkelly/cordova-plugin-midi-sender/issues</issue>
-
+    <repo>https://github.com/josiaho/cordova-plugin-midi-sender.git</repo>
+    <issue>https://github.com/josiaho/cordova-plugin-midi-sender/issues</issue>
+	<license>MIT</license>
+	
+	<author>Josiah Oslund</author>
+    <engines>
+        <!--
+            Cordova 9.0.0 is all I have tested on - it should work fine with earlier versions.
+            Please modify the below line, test, and submit a PR if it works for you.
+        -->
+        <engine name="cordova-ios" version=">=3.0.0" />
+    </engines>
     <js-module src="www/midisender.js" name="midisender">
         <clobbers target="cordova.plugins.MIDISender" />
     </js-module>
