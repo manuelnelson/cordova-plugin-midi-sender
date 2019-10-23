@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="cordova-plugin-midi-sender" version="0.1.1">
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="cordova-plugin-midi-sender" version="0.1.2">
     <name>MIDISender</name>
     <description>Send and Receive MIDI messages through attached interfaces</description>
     <license>Apache 2.0</license>
