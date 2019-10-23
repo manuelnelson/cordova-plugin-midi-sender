@@ -1,4 +1,4 @@
-MIDISender (modified)
+MIDISender
 ======
 
 This is a fork of [cordova-plugin-midi-sender](https://github.com/jonathanwkelly/cordova-plugin-midi-sender). I added the ability to send/receive MIDI **note** and **CC** message types to [Jonathan's](https://github.com/jonathanwkelly) work.
@@ -6,6 +6,12 @@ This is a fork of [cordova-plugin-midi-sender](https://github.com/jonathanwkelly
 
 Installation
 -------
+
+NPM:
+
+	npm i cordova-plugin-midi-sender
+
+Repository:
 
 	cordova plugin add https://github.com/josiaho/cordova-plugin-midi-sender.git
 
