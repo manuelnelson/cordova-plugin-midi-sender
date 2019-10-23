@@ -9,7 +9,7 @@ Installation
 
 NPM:
 
-	npm i cordova-plugin-midi-sender
+	cordova plugin add cordova-plugin-midi-sender
 
 Repository:
 
