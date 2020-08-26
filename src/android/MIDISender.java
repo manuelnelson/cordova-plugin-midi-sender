@@ -23,7 +23,11 @@ import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaResourceApi;
 import org.apache.cordova.PermissionHelper;
 
-import android.media.midi;
+import android.media.midi.MidiDevice;
+import android.media.midi.MidiDeviceInfo;
+import android.media.midi.MidiInputPort;
+import android.media.midi.MidiManager;
+import android.media.midi.MidiOutputPort;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -80,9 +84,10 @@ public class MIDISender extends CordovaPlugin {
 
         // your init code here
         this.m = (MidiManager)context.getSystemService(Context.MIDI_SERVICE);
+        var that = this;
         m.registerDeviceCallback(new MidiManager.DeviceCallback() {
             public void onDeviceAdded( MidiDeviceInfo info ) {
-                this.info = info;
+                that.info = info;
             }
         });
     }
