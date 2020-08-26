@@ -35,6 +35,7 @@ import android.media.midi.MidiManager;
 import android.media.midi.MidiOutputPort;
 import android.Manifest;
 import android.os.Looper;
+import sun.net.www.protocol.jmod.Handler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -72,11 +73,11 @@ public class MIDISender extends CordovaPlugin {
     public MIDISender() {
         Context context = webView.getContext();
         this.m = (MidiManager)context.getSystemService(Context.MIDI_SERVICE);
-        m.registerDeviceCallback(new MidiManager.DeviceCallback() {
-            public void onDeviceAdded( MidiDeviceInfo info ) {
-                this.info = info;
-            }
-        });
+        // m.registerDeviceCallback(new MidiManager.DeviceCallback() {
+        //     public void onDeviceAdded( MidiDeviceInfo info ) {
+        //         this.info = info;
+        //     }
+        // });
     }
 
     /**
@@ -172,20 +173,20 @@ public class MIDISender extends CordovaPlugin {
     // LOCAL METHODS
     //--------------------------------------------------------------------------
     void openMidiDevice(CallbackContext callbackContext) {
-        if(!this.info) {
+        if(this.info == null) {
             callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, "No midi info available"));
         }
-        this.m.openDevice(this.info, new MidiManager.OnDeviceOpenedListener() {
-            @Override
-            public void onDeviceOpened(MidiDevice device) {
-                if (device == null) {
-                    LOG.e(TAG, "could not open device " + info);
-                } else {
-                    this.device = device;
-                    callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, "Midi connected!"));
-                }
-            }
-         });
+        // this.m.openDevice(this.info, new MidiManager.OnDeviceOpenedListener() {
+        //     @Override
+        //     public void onDeviceOpened(MidiDevice device) {
+        //         if (device == null) {
+        //             LOG.e(TAG, "could not open device " + info);
+        //         } else {
+        //             this.device = device;
+        //             callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, "Midi connected!"));
+        //         }
+        //     }
+        //  }, new Handler(Looper.getMainLooper()));
     }
 
     void sendProgramChange(int channelNum, int programNum) {
