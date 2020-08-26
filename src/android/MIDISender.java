@@ -23,19 +23,20 @@ import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaResourceApi;
 import org.apache.cordova.PermissionHelper;
 
+import android.media.midi;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.media.AudioManager;
-import android.media.AudioManager.OnAudioFocusChangeListener;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Looper;
 
 import java.security.Permission;
 import java.util.ArrayList;
 
 import org.apache.cordova.LOG;
 import org.apache.cordova.PluginResult;
+import org.apache.cordova;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -186,7 +187,7 @@ public class MIDISender extends CordovaPlugin {
             @Override
             public void onDeviceOpened(MidiDevice device) {
                 if (device == null) {
-                    Log.e(TAG, "could not open device " + info);
+                    LOG.e(TAG, "could not open device " + info);
                 } else {
                     this.device = device;
                     callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, "Midi connected!"));
@@ -220,23 +221,23 @@ public class MIDISender extends CordovaPlugin {
     void getIncoming(int commandId) {
         //tbd
     }
-    void sendEventMessage(String action, JSONObject actionData) {
-        JSONObject message = new JSONObject();
-        try {
-            message.put("action", action);
-            if (actionData != null) {
-                message.put(action, actionData);
-            }
-        } catch (JSONException e) {
-            LOG.e(TAG, "Failed to create event message", e);
-        }
+    // void sendEventMessage(String action, JSONObject actionData) {
+    //     JSONObject message = new JSONObject();
+    //     try {
+    //         message.put("action", action);
+    //         if (actionData != null) {
+    //             message.put(action, actionData);
+    //         }
+    //     } catch (JSONException e) {
+    //         LOG.e(TAG, "Failed to create event message", e);
+    //     }
 
-        PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, message);
-        pluginResult.setKeepCallback(true);
-        if (messageChannel != null) {
-            messageChannel.sendPluginResult(pluginResult);
-        }
-    }
+    //     PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, message);
+    //     pluginResult.setKeepCallback(true);
+    //     if (messageChannel != null) {
+    //         messageChannel.sendPluginResult(pluginResult);
+    //     }
+    // }
 
     public void onRequestPermissionResult(int requestCode, String[] permissions,
                                           int[] grantResults) throws JSONException
