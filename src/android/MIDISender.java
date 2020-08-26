@@ -20,10 +20,13 @@ package mnelson.midisender;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaArgs;
+import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.PermissionHelper;
 import org.apache.cordova.PluginResult;
 import org.apache.cordova.LOG;
+import android.content.Context;
+
 
 import android.media.midi.MidiDevice;
 import android.media.midi.MidiDeviceInfo;
@@ -67,11 +70,11 @@ public class MIDISender extends CordovaPlugin {
      * Constructor.
      */
     public MIDISender() {
+        Context context = webView.getContext();
         this.m = (MidiManager)context.getSystemService(Context.MIDI_SERVICE);
-        var that = this;
         m.registerDeviceCallback(new MidiManager.DeviceCallback() {
             public void onDeviceAdded( MidiDeviceInfo info ) {
-                that.info = info;
+                this.info = info;
             }
         });
     }
@@ -182,8 +185,7 @@ public class MIDISender extends CordovaPlugin {
                     callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, "Midi connected!"));
                 }
             }
-         }, new Handler(Looper.getMainLooper())
-        );
+         });
     }
 
     void sendProgramChange(int channelNum, int programNum) {
@@ -207,7 +209,7 @@ public class MIDISender extends CordovaPlugin {
         this.inputPort.send(buffer, offset, numBytes);
     }
 
-    void getIncoming(int commandId) {
+    void getIncoming(int commandId, CallbackContext callbackContext) {
         //tbd
     }
 
