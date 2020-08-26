@@ -18,6 +18,8 @@
 */
 package mnelson.midisender;
 
+import java.io.IOException;
+
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaArgs;
 import org.apache.cordova.CordovaWebView;
@@ -206,7 +208,11 @@ public class MIDISender extends CordovaPlugin {
         buffer[numBytes++] = (byte)value; // max velocity
         int offset = 0;
         // post is non-blocking
-        this.inputPort.send(buffer, offset, numBytes);
+        try {
+            this.inputPort.send(buffer, offset, numBytes);
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
     }
 
     void getIncoming(int commandId, CallbackContext callbackContext) {
