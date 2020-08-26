@@ -22,6 +22,11 @@ MIDISender.sendControlChange = function(channelNum, programNum, valueNum) {
 	channelNum = parseInt(channelNum) + 175;
 	exec(function(){}, function(){}, "MIDISender", "sendControlChange", [channelNum, programNum, valueNum]);
 };
+MIDISender.connectMidi = function() {
+    exec(function(message){
+        alert(message)
+    },function(error){}, "MIDISender", connectMidi, [])
+}
 
 /**
  * @param {function} callback

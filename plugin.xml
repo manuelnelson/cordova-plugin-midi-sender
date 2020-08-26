@@ -9,7 +9,7 @@
     <issue>https://github.com/josiaho/cordova-plugin-midi-sender/issues</issue>
 	<license>MIT</license>
 	
-	<author>Josiah Oslund</author>
+	<author>Emmanuel Nelson</author>
     <engines>
         <!--
             Cordova 9.0.0 is all I have tested on - it should work fine with earlier versions.
@@ -20,6 +20,26 @@
     <js-module src="www/midisender.js" name="midisender">
         <clobbers target="cordova.plugins.MIDISender" />
     </js-module>
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="MIDISender" >
+                <param name="android-package" value="MIDISender" />
+                <param name="onload" value="true" />
+            </feature>
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/*">
+<!--            <uses-permission android:name="android.permission.BLUETOOTH"/>-->
+<!--            <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>-->
+<!--            <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>-->
+
+            <uses-feature android:name="android.software.midi" android:required="true"/>
+        </config-file>
+
+        <source-file src="src/android/MIDISender.java"  />
+    </platform>
 
     <!-- ios -->
     <platform name="ios">

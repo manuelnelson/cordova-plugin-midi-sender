@@ -1,34 +1,37 @@
 {
-    "version": "0.1.2",
-    "name": "cordova-plugin-midi-sender",
+    "version": "0.1.3",
+    "name": "cordova-plugin-midi-sender-android",
     "cordova_name": "MIDISender",
     "description": "MIDI Communication Plugin",
-    "repo": "https://github.com/josiaho/cordova-plugin-midi-sender.git",
-    "issue": "https://github.com/josiaho/cordova-plugin-midi-sender/issues",
+    "repo": "https://github.com/manuelnelson/cordova-plugin-midi-sender.git",
+    "issue": "https://github.com/manuelnelson/cordova-plugin-midi-sender/issues",
     "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1"
     },
     "cordova": {
     	  "id": "cordova-plugin-midi-sender",
     	  "platforms": [
-    	    "ios"
+          "ios",
+          "android"
     	  ]
     	},
     "repository": {
       "type": "git",
-      "url": "git+https://github.com/josiaho/cordova-plugin-midi-sender.git"
+      "url": "git+https://github.com/manuelnelson/cordova-plugin-midi-sender.git"
     },
     "keywords": [
         "cordova",
         "ecosystem:cordova",
         "cordova-ios",
+        "cordova-android",
         "MIDI",
         "Program",
         "Change",
         "CoreAudio"
     ],
     "platforms": [
-        "ios"
+        "ios",
+        "android"
     ],
     "engines": [
         {
@@ -36,10 +39,10 @@
             "version": ">=3.1.0"
         }
     ],
-    "author": "Josiah Oslund",
+    "author": "Emmanuel Nelson",
     "license": "Apache 2.0",
     "bugs": {
-      "url": "https://github.com/josiaho/cordova-plugin-midi-sender/issues"
+      "url": "https://github.com/manuelnelson/cordova-plugin-midi-sender/issues"
     },
-    "homepage": "https://github.com/josiaho/cordova-plugin-midi-sender"
+    "homepage": "https://github.com/manuelnelson/cordova-plugin-midi-sender/"
 }
