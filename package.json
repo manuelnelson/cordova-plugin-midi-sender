@@ -11,8 +11,8 @@
     "cordova": {
     	  "id": "cordova-plugin-midi-sender",
     	  "platforms": [
-          "ios",
-          "android"
+              "ios",
+              "android"
     	  ]
     	},
     "repository": {
@@ -33,12 +33,16 @@
         "ios",
         "android"
     ],
-    "engines": [
-        {
-            "name": "cordova",
-            "version": ">=3.1.0"
+    "engines": {
+        "cordovaDependencies": {
+            "3.0.0": {
+                "cordova-android": ">=6.3.0"
+            },
+            "5.0.0": {
+                "cordova": ">100"
+            }
         }
-    ],
+    },
     "author": "Emmanuel Nelson",
     "license": "Apache 2.0",
     "bugs": {

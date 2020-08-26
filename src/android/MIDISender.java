@@ -25,30 +25,18 @@ import org.apache.cordova.PermissionHelper;
 import org.apache.cordova.PluginResult;
 import org.apache.cordova.LOG;
 
-
-import android.media.midi;
 import android.media.midi.MidiDevice;
 import android.media.midi.MidiDeviceInfo;
 import android.media.midi.MidiInputPort;
 import android.media.midi.MidiManager;
 import android.media.midi.MidiOutputPort;
 import android.Manifest;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Looper;
 
-import java.security.Permission;
-import java.util.ArrayList;
-
-import org.apache.cordova.LOG;
-import org.apache.cordova.PluginResult;
-import org.apache.cordova;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
 
 /**
  * This class called by CordovaActivity to play and record audio.
@@ -95,9 +83,11 @@ public class MIDISender extends CordovaPlugin {
      * @param callbackContext		The callback context used when calling back into JavaScript.
      * @return 				A PluginResult object with a status and message.
      */
+    @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         PluginResult.Status status = PluginResult.Status.OK;
         String result = "";
+        callbackContext.
 
         if(action.equals("sendProgramChange")) {
             int channelNum = args.getInt(0);
