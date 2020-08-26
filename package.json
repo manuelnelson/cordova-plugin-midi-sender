@@ -1,6 +1,6 @@
 {
     "version": "0.1.3",
-    "name": "cordova-plugin-midi-sender-android",
+    "name": "cordova-plugin-midi-sender",
     "cordova_name": "MIDISender",
     "description": "MIDI Communication Plugin",
     "repo": "https://github.com/manuelnelson/cordova-plugin-midi-sender.git",

@@ -16,20 +16,23 @@
        specific language governing permissions and limitations
        under the License.
 */
-package org.apache.cordova.media;
+package mnelson.midisender;
 
 import org.apache.cordova.CallbackContext;
+import org.apache.cordova.CordovaArgs;
 import org.apache.cordova.CordovaPlugin;
-import org.apache.cordova.CordovaResourceApi;
 import org.apache.cordova.PermissionHelper;
+import org.apache.cordova.PluginResult;
+import org.apache.cordova.LOG;
 
+
+import android.media.midi;
 import android.media.midi.MidiDevice;
 import android.media.midi.MidiDeviceInfo;
 import android.media.midi.MidiInputPort;
 import android.media.midi.MidiManager;
 import android.media.midi.MidiOutputPort;
 import android.Manifest;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -76,13 +79,6 @@ public class MIDISender extends CordovaPlugin {
      * Constructor.
      */
     public MIDISender() {
-    }
-
-    @Override
-    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
-        super.initialize(cordova, webView);
-
-        // your init code here
         this.m = (MidiManager)context.getSystemService(Context.MIDI_SERVICE);
         var that = this;
         m.registerDeviceCallback(new MidiManager.DeviceCallback() {
@@ -91,7 +87,6 @@ public class MIDISender extends CordovaPlugin {
             }
         });
     }
-
 
     /**
      * Executes the request and returns PluginResult.
@@ -226,57 +221,6 @@ public class MIDISender extends CordovaPlugin {
     void getIncoming(int commandId) {
         //tbd
     }
-    // void sendEventMessage(String action, JSONObject actionData) {
-    //     JSONObject message = new JSONObject();
-    //     try {
-    //         message.put("action", action);
-    //         if (actionData != null) {
-    //             message.put(action, actionData);
-    //         }
-    //     } catch (JSONException e) {
-    //         LOG.e(TAG, "Failed to create event message", e);
-    //     }
 
-    //     PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, message);
-    //     pluginResult.setKeepCallback(true);
-    //     if (messageChannel != null) {
-    //         messageChannel.sendPluginResult(pluginResult);
-    //     }
-    // }
 
-    public void onRequestPermissionResult(int requestCode, String[] permissions,
-                                          int[] grantResults) throws JSONException
-    {
-        for(int r:grantResults)
-        {
-            if(r == PackageManager.PERMISSION_DENIED)
-            {
-                this.messageChannel.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, PERMISSION_DENIED_ERROR));
-                return;
-            }
-        }
-        promptForRecord();
-    }
-
-    /*
-     * This little utility method catch-all work great for multi-permission stuff.
-     *
-     */
-
-    private void promptForRecord()
-    {
-//        if(PermissionHelper.hasPermission(this, permissions[WRITE_EXTERNAL_STORAGE])  &&
-//                PermissionHelper.hasPermission(this, permissions[RECORD_AUDIO])) {
-//            this.startRecordingAudio(recordId, FileHelper.stripFileProtocol(fileUriStr));
-//        }
-//        else if(PermissionHelper.hasPermission(this, permissions[RECORD_AUDIO]))
-//        {
-//            getWritePermission(WRITE_EXTERNAL_STORAGE);
-//        }
-//        else
-//        {
-//            getMicPermission(RECORD_AUDIO);
-//        }
-
-    }
 }

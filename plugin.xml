@@ -5,8 +5,8 @@
     <description>Send and Receive MIDI messages through attached interfaces</description>
     <license>Apache 2.0</license>
     <keywords>MIDI,coreaudio,program,change</keywords>
-    <repo>https://github.com/josiaho/cordova-plugin-midi-sender.git</repo>
-    <issue>https://github.com/josiaho/cordova-plugin-midi-sender/issues</issue>
+    <repo>https://github.com/manuelnelson/cordova-plugin-midi-sender.git</repo>
+    <issue>https://github.com/manuelnelson/cordova-plugin-midi-sender/issues</issue>
 	<license>MIT</license>
 	
 	<author>Emmanuel Nelson</author>
@@ -25,7 +25,7 @@
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="MIDISender" >
-                <param name="android-package" value="MIDISender" />
+                <param name="android-package" value="mnelson.midisender.MIDISender" />
                 <param name="onload" value="true" />
             </feature>
         </config-file>
@@ -38,7 +38,7 @@
             <uses-feature android:name="android.software.midi" android:required="true"/>
         </config-file>
 
-        <source-file src="src/android/MIDISender.java" target-dir="src/MIDISender"  />
+        <source-file src="src/android/MIDISender.java" target-dir="src/mnelson/midisender"  />
     </platform>
 
     <!-- ios -->
