@@ -25,7 +25,7 @@
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="MIDISender" >
-                <param name="android-package" value="mnelson.midisender.MIDISender" />
+                <param name="android-package" value="MIDISender" />
                 <param name="onload" value="true" />
             </feature>
         </config-file>
@@ -38,7 +38,7 @@
             <uses-feature android:name="android.software.midi" android:required="true"/>
         </config-file>
 
-        <source-file src="src/android/MIDISender.java" target-dir="src/mnelson/midisender"  />
+        <source-file src="src/android/MIDISender.java" target-dir="src/midisender"  />
     </platform>
 
     <!-- ios -->

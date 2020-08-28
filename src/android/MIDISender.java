@@ -26,6 +26,8 @@ import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.PermissionHelper;
 import org.apache.cordova.PluginResult;
+import org.apache.cordova.CordovaInterface;
+import org.apache.cordova.CordovaPreferences;
 import org.apache.cordova.LOG;
 import android.content.Context;
 
@@ -151,20 +153,8 @@ public class MIDISender extends CordovaPlugin {
         if (id.equals("telephone")) {
             // If phone ringing, then pause playing
             if ("ringing".equals(data) || "offhook".equals(data)) {
-                // Get all audio players and pause them
-//                for (AudioPlayer audio : this.players.values()) {
-//                    if (audio.getState() == AudioPlayer.STATE.MEDIA_RUNNING.ordinal()) {
-//                        this.pausedForPhone.add(audio);
-//                        audio.pausePlaying();
-//                    }
-//                }
             }
-            // If phone idle, then resume playing those players we paused
             else if ("idle".equals(data)) {
-//                for (AudioPlayer audio : this.pausedForPhone) {
-//                    audio.startPlaying(null);
-//                }
-//                this.pausedForPhone.clear();
             }
         }
         return null;
