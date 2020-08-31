@@ -15,18 +15,20 @@
             Cordova 9.0.0 is all I have tested on - it should work fine with earlier versions.
             Please modify the below line, test, and submit a PR if it works for you.
         -->
-        <engine name="cordova-ios" version=">=3.0.0" />
+        <engine name="cordova" version=">=3.4.0"/>
+        <!-- <engine name="cordova-android" version=">=3.0.0" />
+        <engine name="cordova-ios" version=">=3.0.0" /> -->
     </engines>
+    <asset src="www/midisender.js" target="js/midisender.js"/>
     <js-module src="www/midisender.js" name="midisender">
-        <clobbers target="cordova.plugins.MIDISender" />
+        <clobbers target="MIDISender" />
     </js-module>
 
     <!-- android -->
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="MIDISender" >
-                <param name="android-package" value="MIDISender" />
-                <param name="onload" value="true" />
+                <param name="android-package" value="com.emmanuelnelson.MIDISender" />
             </feature>
         </config-file>
 
@@ -38,7 +40,7 @@
             <uses-feature android:name="android.software.midi" android:required="true"/>
         </config-file>
 
-        <source-file src="src/android/MIDISender.java" target-dir="src/midisender"  />
+        <source-file src="src/android/MIDISender.java" target-dir="src/com/emmanuelnelson/midisender"  />
     </platform>
 
     <!-- ios -->
