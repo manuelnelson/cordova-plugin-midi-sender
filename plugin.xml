@@ -16,8 +16,6 @@
             Please modify the below line, test, and submit a PR if it works for you.
         -->
         <engine name="cordova" version=">=3.4.0"/>
-        <!-- <engine name="cordova-android" version=">=3.0.0" />
-        <engine name="cordova-ios" version=">=3.0.0" /> -->
     </engines>
     <asset src="www/midisender.js" target="js/midisender.js"/>
     <js-module src="www/midisender.js" name="midisender">
@@ -33,14 +31,10 @@
         </config-file>
 
         <config-file target="AndroidManifest.xml" parent="/*">
-<!--            <uses-permission android:name="android.permission.BLUETOOTH"/>-->
-<!--            <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>-->
-<!--            <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>-->
-
             <uses-feature android:name="android.software.midi" android:required="true"/>
         </config-file>
 
-        <source-file src="src/android/MIDISender.java" target-dir="src/com/emmanuelnelson/midisender"  />
+        <source-file src="src/android/MIDISender.java" target-dir="src/com/emmanuelnelson"  />
     </platform>
 
     <!-- ios -->
