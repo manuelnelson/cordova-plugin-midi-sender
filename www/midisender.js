@@ -8,6 +8,11 @@ var MIDISender = function() {};
  * @param {number} programNum 1-128
  * @return {void}
  */
+MIDISender.greet = function(hi) {
+	// add 192 for the 192-207 program change range
+
+    exec(function(){}, function(){}, "MIDISender", "greet", [hi]);
+};
 MIDISender.sendProgramChange = function(channelNum, programNum) {
 	// add 192 for the 192-207 program change range
 	channelNum = parseInt(channelNum) + 191;

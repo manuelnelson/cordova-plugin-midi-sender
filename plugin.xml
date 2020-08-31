@@ -38,7 +38,7 @@
             <uses-feature android:name="android.software.midi" android:required="true"/>
         </config-file>
 
-        <source-file src="src/android/MIDISender.java" target-dir="src/midisender"  />
+        <source-file src="src/android/Hello.java" target-dir="src/midisender"  />
     </platform>
 
     <!-- ios -->

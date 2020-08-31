@@ -1,10 +1,10 @@
-package com.example.plugin;
+package mnelson.midisender;
 
 import org.apache.cordova.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-public class Hello extends CordovaPlugin {
+public class MIDISender extends CordovaPlugin {
 
     @Override
     public boolean execute(String action, JSONArray data, CallbackContext callbackContext) throws JSONException {
