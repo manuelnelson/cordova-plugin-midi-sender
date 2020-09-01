@@ -1,11 +1,12 @@
 {
-    "version": "0.1.3",
+    "version": "0.1.4",
     "name": "cordova-plugin-midi-sender-android",
     "cordova_name": "MIDISender",
     "description": "MIDI Communication Plugin",
     "repo": "https://github.com/manuelnelson/cordova-plugin-midi-sender.git",
     "issue": "https://github.com/manuelnelson/cordova-plugin-midi-sender/issues",
     "types": "./types/index.d.ts",
+    "main": "www/midisender.js",
     "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1"
     },
