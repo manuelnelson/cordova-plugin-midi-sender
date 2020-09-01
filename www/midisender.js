@@ -73,4 +73,4 @@ MIDISender.getIncoming = function(callback)
 	  );
 };
 
-module.exports = MIDISender;
+export {MIDISender}
