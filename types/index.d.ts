@@ -1,12 +1,17 @@
 import { MIDISender } from "../www/midisender";
 
-interface MIDISender {
-  greet() : void
-  sendProgramChange(channelNum:number, programNum:number) : void
-  sendNote(channelNum:number, programNum:number, valueNum:number) : void
-  sendControlChange(channelNum:number, programNum:number, valueNum:number) : void
-  connectMidi() : void
-  getIncoming(callback:(data:any) => void) : void
+// import { MIDISender } from "../www/midisender";
+declare namespace MIDISender {
+  function greet() : void
+  function sendProgramChange(channelNum:number, programNum:number) : void
+  function sendNote(channelNum:number, programNum:number, valueNum:number) : void
+  function sendControlChange(channelNum:number, programNum:number, valueNum:number) : void
+  function connectMidi() : void
+  function getIncoming(callback:(data:any) => void) : void
+  // interface MIDISender {
+  // }
+  
 }
+
 
 export {MIDISender}
