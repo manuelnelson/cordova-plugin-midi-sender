@@ -1,8 +1,8 @@
 interface MIDISender {
-  greet()
-  sendProgramChange(channelNum:number, programNum:number)
-  sendNote(channelNum:number, programNum:number, valueNum:number)
-  sendControlChange(channelNum:number, programNum:number, valueNum:number)
-  connectMidi()
-  getIncoming(callback:Function)
+  greet() : void
+  sendProgramChange(channelNum:number, programNum:number) : void
+  sendNote(channelNum:number, programNum:number, valueNum:number) : void
+  sendControlChange(channelNum:number, programNum:number, valueNum:number) : void
+  connectMidi() : void
+  getIncoming(callback:Function) : void
 }
