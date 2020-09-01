@@ -10,8 +10,7 @@ var MIDISender = function() {};
  */
 MIDISender.greet = function(hi) {
 	// add 192 for the 192-207 program change range
-
-    exec(function(){}, function(){}, "MIDISender", "greet", [hi]);
+    cordova.exec(function(){}, function(){}, "MIDISender", "greet", [hi]);
 };
 MIDISender.sendProgramChange = function(channelNum, programNum) {
 	// add 192 for the 192-207 program change range
@@ -73,4 +72,4 @@ MIDISender.getIncoming = function(callback)
 	  );
 };
 
-export {MIDISender}
+exports.module = MIDISender;
