@@ -82,38 +82,34 @@ public class MIDISender extends CordovaPlugin {
      */
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        callbackContext.success(action);
+        if(action.equals("sendProgramChange")) {
+            int channelNum = args.getInt(0);
+            int programNum = args.getInt(1);
+            this.sendProgramChange(channelNum,programNum);
+        }
+        else if(action.equals("sendNote")) {
+            int channelNum = args.getInt(0);
+            int programNum = args.getInt(1);
+            int value = args.getInt(2);
+            this.sendNote(channelNum,programNum, value, callbackContext);
+        }
+        else if(action.equals("sendControlChange")) {
+            int channelNum = args.getInt(0);
+            int programNum = args.getInt(1);
+            int value = args.getInt(2);
+            this.sendNote(channelNum,programNum, value, callbackContext);
+        }
+        else if(action.equals("connectMidi")) {
+            return this.openMidiDevice(callbackContext);
+        }
+        else if(action.equals("getIncoming")) {
+            int commandInt = args.getInt(0);
+            this.getIncoming(commandInt, callbackContext);
+        }
+        else { // Unrecognized action.
+            return false;
+        }
         return true;
-        // if(action.equals("sendProgramChange")) {
-        //     int channelNum = args.getInt(0);
-        //     int programNum = args.getInt(1);
-        //     this.sendProgramChange(channelNum,programNum);
-        // }
-        // else if(action.equals("sendNote")) {
-        //     int channelNum = args.getInt(0);
-        //     int programNum = args.getInt(1);
-        //     int value = args.getInt(2);
-        //     this.sendNote(channelNum,programNum, value, callbackContext);
-        // }
-        // else if(action.equals("sendControlChange")) {
-        //     int channelNum = args.getInt(0);
-        //     int programNum = args.getInt(1);
-        //     int value = args.getInt(2);
-        //     this.sendNote(channelNum,programNum, value, callbackContext);
-        // }
-        // else if(action.equals("connectMidi")) {
-        //     this.openMidiDevice(callbackContext);
-        // }
-        // else if(action.equals("getIncoming")) {
-        //     int commandInt = args.getInt(0);
-        //     this.getIncoming(commandInt, callbackContext);
-        // }
-        // else { // Unrecognized action.
-        //     return false;
-        // }
-        // callbackContext.sendPluginResult(new PluginResult(status, result));
-
-        // return true;
     }
 
     /**
@@ -152,8 +148,9 @@ public class MIDISender extends CordovaPlugin {
     //--------------------------------------------------------------------------
     // LOCAL METHODS
     //--------------------------------------------------------------------------
-    void openMidiDevice(CallbackContext callbackContext) {
+    boolean openMidiDevice(CallbackContext callbackContext) {
         callbackContext.success("No midi info available");
+        return true;
         // callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, "No midi info available"));
         // if(this.info == null) {
         // }
