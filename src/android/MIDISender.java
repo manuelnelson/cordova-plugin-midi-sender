@@ -154,7 +154,8 @@ public class MIDISender extends CordovaPlugin {
     // LOCAL METHODS
     //--------------------------------------------------------------------------
     void openMidiDevice(CallbackContext callbackContext) {
-        callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, "No midi info available"));
+        callbackContext.success("No midi info available")
+        // callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, "No midi info available"));
         // if(this.info == null) {
         // }
         // this.m.openDevice(this.info, new MidiManager.OnDeviceOpenedListener() {
