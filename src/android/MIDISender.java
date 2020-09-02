@@ -63,7 +63,15 @@ public class MIDISender extends CordovaPlugin {
     /**
      * Constructor.
      */
-    // public MIDISender() {
+    public MIDISender() {
+        Context context = webView.getContext();
+        MidiManager manager = (MidiManager)context.getSystemService(Context.MIDI_SERVICE);
+        manager.registerDeviceCallback(new MidiManager.DeviceCallback() {
+            public void onDeviceAdded( MidiDeviceInfo info ) {
+                this.info = info;
+            }
+        });
+
         // Context context = webView.getContext();
         // this.m = (MidiManager)context.getSystemService(Context.MIDI_SERVICE);
         // m.registerDeviceCallback(new MidiManager.DeviceCallback() {
@@ -71,7 +79,7 @@ public class MIDISender extends CordovaPlugin {
         //         this.info = info;
         //     }
         // });
-    // }
+    }
 
     /**
      * Executes the request and returns PluginResult.
@@ -149,12 +157,15 @@ public class MIDISender extends CordovaPlugin {
     // LOCAL METHODS
     //--------------------------------------------------------------------------
     boolean openMidiDevice(CallbackContext callbackContext) {
-        callbackContext.success("No midi info available");
-        return true;
-        // callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, "No midi info available"));
-        // if(this.info == null) {
-        // }
-        // this.m.openDevice(this.info, new MidiManager.OnDeviceOpenedListener() {
+        if(this.info == null) {
+            callbackContext.success("No midi info available");
+            return true;
+        }
+        else {
+            callbackContext.success("Midi available!!");
+            return true;
+        }
+        // manager.openDevice(this.info, new MidiManager.OnDeviceOpenedListener() {
         //     @Override
         //     public void onDeviceOpened(MidiDevice device) {
         //         if (device == null) {
