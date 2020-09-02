@@ -82,11 +82,8 @@ public class MIDISender extends CordovaPlugin {
      */
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        PluginResult.Status status = PluginResult.Status.OK;
-        String result = "";
         callbackContext.success("test");
-        callbackContext.sendPluginResult(new PluginResult(status, action));
-
+        return true;
         if(action.equals("sendProgramChange")) {
             int channelNum = args.getInt(0);
             int programNum = args.getInt(1);
@@ -105,7 +102,7 @@ public class MIDISender extends CordovaPlugin {
             this.sendNote(channelNum,programNum, value, callbackContext);
         }
         else if(action.equals("connectMidi")) {
-            // this.openMidiDevice(callbackContext);
+            this.openMidiDevice(callbackContext);
         }
         else if(action.equals("getIncoming")) {
             int commandInt = args.getInt(0);
@@ -114,9 +111,9 @@ public class MIDISender extends CordovaPlugin {
         else { // Unrecognized action.
             return false;
         }
-        callbackContext.sendPluginResult(new PluginResult(status, result));
+        // callbackContext.sendPluginResult(new PluginResult(status, result));
 
-        return true;
+        // return true;
     }
 
     /**
