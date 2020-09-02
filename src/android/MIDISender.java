@@ -84,7 +84,7 @@ public class MIDISender extends CordovaPlugin {
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         PluginResult.Status status = PluginResult.Status.OK;
         String result = "";
-        callbackContext.success('test');
+        callbackContext.success("test");
         callbackContext.sendPluginResult(new PluginResult(status, action));
 
         if(action.equals("sendProgramChange")) {
