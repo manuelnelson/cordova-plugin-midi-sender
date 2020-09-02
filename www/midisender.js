@@ -31,7 +31,7 @@ MIDISender.connectMidi = function() {
 			alert(message)
     },function(error){
 			alert(error)
-		}, "MIDISender", connectMidi, [])
+		}, "MIDISender", "connectMidi", [])
 }
 
 /**
