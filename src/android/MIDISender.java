@@ -68,7 +68,7 @@ public class MIDISender extends CordovaPlugin {
         MidiManager manager = (MidiManager)context.getSystemService(Context.MIDI_SERVICE);
         manager.registerDeviceCallback(new MidiManager.DeviceCallback() {
             public void onDeviceAdded( MidiDeviceInfo info ) {
-                this.info = info;
+                MIDISender.this.info = info;
             }
         });
 
