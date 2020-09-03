@@ -70,7 +70,7 @@ public class MIDISender extends CordovaPlugin {
             public void onDeviceAdded( MidiDeviceInfo info ) {
                 MIDISender.this.info = info;
             }
-        });
+        }, new Handler(Looper.getMainLooper()) );
 
         // Context context = webView.getContext();
         // this.m = (MidiManager)context.getSystemService(Context.MIDI_SERVICE);
