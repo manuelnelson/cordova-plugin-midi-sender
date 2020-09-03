@@ -66,7 +66,6 @@ public class MIDISender extends CordovaPlugin {
      */
     public MIDISender() {
         // Context context = webView.getContext();
-        // Context context=this.cordova.getActivity().getApplicationContext(); 
         // MidiManager manager = (MidiManager)context.getSystemService(Context.MIDI_SERVICE);
         // manager.registerDeviceCallback(new MidiManager.DeviceCallback() {
         //     public void onDeviceAdded( MidiDeviceInfo info ) {
@@ -159,6 +158,7 @@ public class MIDISender extends CordovaPlugin {
     // LOCAL METHODS
     //--------------------------------------------------------------------------
     boolean openMidiDevice(CallbackContext callbackContext) {
+        Context context=this.cordova.getActivity().getApplicationContext(); 
         callbackContext.success("No midi info available");
         return true;
         // if(this.info == null) {
