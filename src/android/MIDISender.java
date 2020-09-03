@@ -153,6 +153,7 @@ public class MIDISender extends CordovaPlugin {
                 MIDISender.this.info = info;
             }
         }, new Handler(Looper.getMainLooper()) );
+        return true;
     }
 
     boolean openMidiDevice(CallbackContext callbackContext) {
@@ -160,19 +161,19 @@ public class MIDISender extends CordovaPlugin {
             callbackContext.success("No midi info available");
             return true;
         }
-        else {
-            this.manager.openDevice(this.info, new MidiManager.OnDeviceOpenedListener() {
-                @Override
-                public void onDeviceOpened(MidiDevice device) {
-                    if (device == null) {
-                        callbackContext.success("Could not open device");
-                    } else {
-                        MIDISender.this.device = device;
-                        callbackContext.success("Midi connected");
-                    }
+        this.manager.openDevice(this.info, new MidiManager.OnDeviceOpenedListener() {
+            @Override
+            public void onDeviceOpened(MidiDevice device) {
+                if (device == null) {
+                    callbackContext.success("Could not open device");
+                } else {
+                    MIDISender.this.device = device;
+                    callbackContext.success("Midi connected");
                 }
-            }, new Handler(Looper.getMainLooper()));
-        }
+            }
+        }, new Handler(Looper.getMainLooper()));
+        return true;
+
     }
 
     void sendProgramChange(int channelNum, int programNum) {
