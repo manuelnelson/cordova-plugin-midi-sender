@@ -56,7 +56,7 @@ public class MIDISender extends CordovaPlugin {
     private String recordId;
     private String fileUriStr;
 
-    private MidiManager m;
+    private MidiManager manager;
     private MidiDevice device;
     private MidiInputPort inputPort;
     private MidiOutputPort output;
