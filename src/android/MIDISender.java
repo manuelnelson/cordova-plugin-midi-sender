@@ -65,8 +65,8 @@ public class MIDISender extends CordovaPlugin {
      * Constructor.
      */
     public MIDISender() {
-        // Context context = webView.getContext();
-        // MidiManager manager = (MidiManager)context.getSystemService(Context.MIDI_SERVICE);
+        Context context = webView.getContext();
+        MidiManager manager = (MidiManager)context.getSystemService(Context.MIDI_SERVICE);
         // manager.registerDeviceCallback(new MidiManager.DeviceCallback() {
         //     public void onDeviceAdded( MidiDeviceInfo info ) {
         //         MIDISender.this.info = info;
