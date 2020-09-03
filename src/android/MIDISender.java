@@ -156,7 +156,7 @@ public class MIDISender extends CordovaPlugin {
     }
 
     boolean openMidiDevice(CallbackContext callbackContext) {
-        if(!this.info) {
+        if(this.info == null) {
             callbackContext.success("No midi info available");
             return true;
         }
