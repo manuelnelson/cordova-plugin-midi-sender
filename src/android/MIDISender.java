@@ -65,15 +65,6 @@ public class MIDISender extends CordovaPlugin {
      * Constructor.
      */
     public MIDISender() {
-        // Context context = webView.getContext();
-
-        // Context context = webView.getContext();
-        // this.m = (MidiManager)context.getSystemService(Context.MIDI_SERVICE);
-        // m.registerDeviceCallback(new MidiManager.DeviceCallback() {
-        //     public void onDeviceAdded( MidiDeviceInfo info ) {
-        //         this.info = info;
-        //     }
-        // });
     }
 
     /**
@@ -101,6 +92,9 @@ public class MIDISender extends CordovaPlugin {
             int programNum = args.getInt(1);
             int value = args.getInt(2);
             this.sendNote(channelNum,programNum, value, callbackContext);
+        }
+        else if(action.equals("setupMidi")) {
+            return this.setupMidi(callbackContext);
         }
         else if(action.equals("connectMidi")) {
             return this.openMidiDevice(callbackContext);
@@ -151,34 +145,34 @@ public class MIDISender extends CordovaPlugin {
     //--------------------------------------------------------------------------
     // LOCAL METHODS
     //--------------------------------------------------------------------------
-    boolean openMidiDevice(CallbackContext callbackContext) {
+    boolean setupMidi(CallbackContext callbackContext) {
         Context context=this.cordova.getActivity().getApplicationContext(); 
-        MidiManager manager = (MidiManager)context.getSystemService(Context.MIDI_SERVICE);
-        manager.registerDeviceCallback(new MidiManager.DeviceCallback() {
+        MIDISender.this.manager = (MidiManager)context.getSystemService(Context.MIDI_SERVICE);
+        MIDISender.this.manager.registerDeviceCallback(new MidiManager.DeviceCallback() {
             public void onDeviceAdded( MidiDeviceInfo info ) {
                 MIDISender.this.info = info;
             }
         }, new Handler(Looper.getMainLooper()) );
+    }
 
-        callbackContext.success("No midi info available");
-        return true;
-        // if(this.info == null) {
-        // }
-        // else {
-        //     callbackContext.success("Midi available!!");
-        //     return true;
-        // }
-        // manager.openDevice(this.info, new MidiManager.OnDeviceOpenedListener() {
-        //     @Override
-        //     public void onDeviceOpened(MidiDevice device) {
-        //         if (device == null) {
-        //             LOG.e(TAG, "could not open device " + info);
-        //         } else {
-        //             this.device = device;
-        //             callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, "Midi connected!"));
-        //         }
-        //     }
-        //  }, new Handler(Looper.getMainLooper()));
+    boolean openMidiDevice(CallbackContext callbackContext) {
+        if(!this.info) {
+            callbackContext.success("No midi info available");
+            return true;
+        }
+        else {
+            this.manager.openDevice(this.info, new MidiManager.OnDeviceOpenedListener() {
+                @Override
+                public void onDeviceOpened(MidiDevice device) {
+                    if (device == null) {
+                        callbackContext.success("Could not open device");
+                    } else {
+                        MIDISender.this.device = device;
+                        callbackContext.success("Midi connected");
+                    }
+                }
+            }, new Handler(Looper.getMainLooper()));
+        }
     }
 
     void sendProgramChange(int channelNum, int programNum) {
