@@ -29,6 +29,7 @@ import android.media.midi.MidiManager;
 import android.media.midi.MidiOutputPort;
 import android.Manifest;
 import android.os.Looper;
+import android.os.Handler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
