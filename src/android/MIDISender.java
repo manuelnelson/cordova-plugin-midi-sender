@@ -181,7 +181,7 @@ import org.json.JSONObject;
                     callbackContext.success("Could not open device");
                 } else {
                     MIDISender.this.device = device;
-                    MidiOutputPort outputPort = device.openOutputPort(1);
+                    MidiOutputPort outputPort = device.openOutputPort(0);
                     outputPort.connect(new MyReceiver());
                     PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, device.getInfo().getOutputPortCount());
                     pluginResult.setKeepCallback(true);
