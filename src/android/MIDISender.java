@@ -189,7 +189,7 @@ import org.json.JSONObject;
                         PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, "Output port!"); 
                         MIDISender.this.callbackContext.sendPluginResult(pluginResult);
                     }
-                    pluginResult.setKeepCallback(true);
+                    // pluginResult.setKeepCallback(true);
                     // callbackContext.success(String.valueOf(device.getInfo().getOutputPortCount()));
                 }
             }
