@@ -178,7 +178,7 @@ import org.json.JSONObject;
                     callbackContext.success("Could not open device");
                 } else {
                     MIDISender.this.device = device;
-                    callbackContext.success(device);
+                    callbackContext.success("device");
                     MidiOutputPort outputPort = device.openOutputPort(1);
                     outputPort.connect(new MyReceiver());
                 }
