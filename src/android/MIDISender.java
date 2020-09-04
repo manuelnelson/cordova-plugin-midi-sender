@@ -64,6 +64,7 @@ import org.json.JSONObject;
     private MidiInputPort inputPort;
     private MidiOutputPort output;
     private MidiDeviceInfo info;
+    private CallbackContext callbackContext;
     /**
      * Constructor.
      */
@@ -79,6 +80,7 @@ import org.json.JSONObject;
      */
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+        this.callbackContext = callbackContext;
         if(action.equals("sendProgramChange")) {
             int channelNum = args.getInt(0);
             int programNum = args.getInt(1);
@@ -164,7 +166,7 @@ import org.json.JSONObject;
             public void onSend(byte[] data, int offset,
                     int count, long timestamp) throws IOException {
                     // parse MIDI or whatever
-                    callbackContext.success(String.valueOf(offset));
+                    MIDISender.this.callbackContext.success(String.valueOf(offset));
             }
         }
         if(this.info == null) {
