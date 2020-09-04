@@ -44,8 +44,8 @@ MIDISender.setupMidi = function() {
 			// alert(error)
 		}, "MIDISender", "setupMidi", [])
 }
-MIDISender.hello = function() {
-	alert('test');
+MIDISender.getIncomingSync = function(channel, data, value) {
+	alert(`${channel} ${data} ${value}`);
 }
 /**
  * @param {function} callback

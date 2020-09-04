@@ -98,8 +98,7 @@ import org.json.JSONObject;
             int value = args.getInt(2);
             this.sendNote(channelNum,programNum, value, callbackContext);
         }
-        else if(action.equals("setupMidi")) {
-            this.executeGlobalJavascript("MIDISender.module.hello()");
+        else if(action.equals("setupMidi")) {            
             return this.setupMidi(callbackContext);
         }
         else if(action.equals("connectMidi")) {
@@ -175,9 +174,7 @@ import org.json.JSONObject;
             public void onSend(byte[] data, int offset,
                     int count, long timestamp) throws IOException {
                     // parse MIDI or whatever
-                    PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, String.valueOf(offset));
-                    pluginResult.setKeepCallback(true);
-                    MIDISender.this.callbackContext.sendPluginResult(pluginResult);
+                    this.executeGlobalJavascript("MIDISender.module.getIncomingSync(" + data[0] + ", " + data[1] +  "," + data[2] + ")");
             }
         }
         if(this.info == null) {
