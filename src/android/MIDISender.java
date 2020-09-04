@@ -175,9 +175,9 @@ import org.json.JSONObject;
                     int count, long timestamp) throws IOException {
                     // parse MIDI or whatever
                     int channel = data[0];
-                    int data = data[1];
+                    int midiData = data[1];
                     int value = data[2];
-                    this.executeGlobalJavascript("MIDISender.module.getIncomingSync(" + String.valueOf(channel) + ", " + String.valueOf(data) +  "," + String.valueOf(value) + ")");
+                    MIDISender.this.executeGlobalJavascript("MIDISender.module.getIncomingSync(" + String.valueOf(channel) + ", " + String.valueOf(midiData) +  "," + String.valueOf(value) + ")");
             }
         }
         if(this.info == null) {
