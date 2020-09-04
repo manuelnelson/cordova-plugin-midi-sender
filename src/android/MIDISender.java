@@ -99,7 +99,7 @@ import org.json.JSONObject;
             this.sendNote(channelNum,programNum, value, callbackContext);
         }
         else if(action.equals("setupMidi")) {
-            this.executeGlobalJavascript("alert('hello')");
+            this.executeGlobalJavascript("MIDISender.hello()");
             return this.setupMidi(callbackContext);
         }
         else if(action.equals("connectMidi")) {

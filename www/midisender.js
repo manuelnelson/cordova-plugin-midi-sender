@@ -44,7 +44,9 @@ MIDISender.setupMidi = function() {
 			// alert(error)
 		}, "MIDISender", "setupMidi", [])
 }
-
+MIDISender.hello = function() {
+	alert('test');
+}
 /**
  * @param {function} callback
  * @return {void}
