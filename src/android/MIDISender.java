@@ -182,10 +182,14 @@ import org.json.JSONObject;
                 } else {
                     MIDISender.this.device = device;
                     MidiOutputPort outputPort = device.openOutputPort(0);
-                    // outputPort.connect(new MyReceiver());
-                    PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, device.getInfo().getOutputPortCount());
+                    if(outputPort == null) {
+                        PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, "No output port"); 
+                        MIDISender.this.callbackContext.sendPluginResult(pluginResult);
+                    } else {
+                        PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, "Output port!"); 
+                        MIDISender.this.callbackContext.sendPluginResult(pluginResult);
+                    }
                     pluginResult.setKeepCallback(true);
-                    MIDISender.this.callbackContext.sendPluginResult(pluginResult);
                     // callbackContext.success(String.valueOf(device.getInfo().getOutputPortCount()));
                 }
             }
