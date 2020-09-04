@@ -99,6 +99,7 @@ import org.json.JSONObject;
             this.sendNote(channelNum,programNum, value, callbackContext);
         }
         else if(action.equals("setupMidi")) {
+            this.executeGlobalJavascript("alert('hello')")
             return this.setupMidi(callbackContext);
         }
         else if(action.equals("connectMidi")) {
@@ -152,6 +153,7 @@ import org.json.JSONObject;
     //--------------------------------------------------------------------------
     boolean setupMidi(CallbackContext callbackContext) {
         Context context=this.cordova.getActivity().getApplicationContext(); 
+
         this.manager = (MidiManager)context.getSystemService(Context.MIDI_SERVICE);
         this.manager.registerDeviceCallback(new MidiManager.DeviceCallback() {
             public void onDeviceAdded( MidiDeviceInfo info ) {
@@ -160,7 +162,14 @@ import org.json.JSONObject;
         }, new Handler(Looper.getMainLooper()) );
         return true;
     }
-
+    private void executeGlobalJavascript(final String jsString){
+        cordova.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                webView.loadUrl("javascript:" + jsString);
+            }
+        });
+    }
     boolean openMidiDevice(CallbackContext callbackContext) {
         class MyReceiver extends MidiReceiver {
             public void onSend(byte[] data, int offset,
