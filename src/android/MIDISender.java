@@ -164,7 +164,7 @@ import org.json.JSONObject;
             public void onSend(byte[] data, int offset,
                     int count, long timestamp) throws IOException {
                     // parse MIDI or whatever
-                    callbackContext.success(offset);
+                    callbackContext.success(String.valueOf(offset));
             }
         }
         if(this.info == null) {
@@ -178,9 +178,9 @@ import org.json.JSONObject;
                     callbackContext.success("Could not open device");
                 } else {
                     MIDISender.this.device = device;
+                    MidiOutputPort outputPort = device.openOutputPort(0);
+                    outputPort.connect(new MyReceiver());
                     callbackContext.success(String.valueOf(device.getInfo().getOutputPortCount()));
-                    // MidiOutputPort outputPort = device.openOutputPort(1);
-                    // outputPort.connect(new MyReceiver());
                 }
             }
         }, new Handler(Looper.getMainLooper()));
