@@ -22,11 +22,12 @@ import java.io.IOException;
 import org.apache.cordova.*;
 import android.content.Context;
 
-import android.media.midi.MidiDevice;
-import android.media.midi.MidiDeviceInfo;
-import android.media.midi.MidiInputPort;
-import android.media.midi.MidiManager;
-import android.media.midi.MidiOutputPort;
+// import android.media.midi.MidiDevice;
+// import android.media.midi.MidiDeviceInfo;
+// import android.media.midi.MidiInputPort;
+// import android.media.midi.MidiManager;
+import android.media.midi.*;
+// import android.media.midi.MidiOutputPort;
 import android.Manifest;
 import android.os.Looper;
 import android.os.Handler;
@@ -47,7 +48,9 @@ import org.json.JSONObject;
  * 		android_asset: 		file name must start with /android_asset/sound.mp3
  * 		sdcard:				file name is just sound.mp3
  */
-public class MIDISender extends CordovaPlugin {
+
+
+ public class MIDISender extends CordovaPlugin {
 
     public static String TAG = "MIDISender";
 
@@ -157,6 +160,13 @@ public class MIDISender extends CordovaPlugin {
     }
 
     boolean openMidiDevice(CallbackContext callbackContext) {
+        class MyReceiver extends MidiReceiver {
+            public void onSend(byte[] data, int offset,
+                    int count, long timestamp) throws IOException {
+                    // parse MIDI or whatever
+                    callbackContext.success(offset);
+            }
+        }
         if(this.info == null) {
             callbackContext.success("No midi info available");
             return true;
@@ -168,7 +178,9 @@ public class MIDISender extends CordovaPlugin {
                     callbackContext.success("Could not open device");
                 } else {
                     MIDISender.this.device = device;
-                    callbackContext.success("Midi connected");
+                    callbackContext.success(device);
+                    MidiOutputPort outputPort = device.openOutputPort(1);
+                    outputPort.connect(new MyReceiver());
                 }
             }
         }, new Handler(Looper.getMainLooper()));
@@ -203,6 +215,8 @@ public class MIDISender extends CordovaPlugin {
 
     void getIncoming(int commandId, CallbackContext callbackContext) {
         //tbd
+
+       
     }
 
 

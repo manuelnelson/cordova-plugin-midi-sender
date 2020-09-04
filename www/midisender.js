@@ -27,19 +27,21 @@ MIDISender.sendControlChange = function(channelNum, programNum, valueNum) {
 	exec(function(){}, function(){}, "MIDISender", "sendControlChange", [channelNum, programNum, valueNum]);
 };
 MIDISender.connectMidi = function() {
-	console.log('called')
 	exec(function(message) {
-			alert(message)
+			console.log(message)
+			if(message == "Midi connected")
+				return true;
+			else 
+				return false;
     },function(error){
 			alert(error)
 		}, "MIDISender", "connectMidi", [])
 }
 MIDISender.setupMidi = function() {
-	console.log('called')
 	exec(function(message) {
-			alert(message)
+			// alert(message)
     },function(error){
-			alert(error)
+			// alert(error)
 		}, "MIDISender", "setupMidi", [])
 }
 
@@ -68,11 +70,12 @@ MIDISender.getIncoming = function(callback)
 			} else if (dc > 175 && dc < 192) { // CC
 				data.channel = dc - 175;
 				data.type = 'Control Change';
-			} else {
-            	data.channel = dc;
-            }
-
-            callback.call(this, data);
+			} 
+			else 
+			{
+				data.channel = dc;
+			}
+			callback.call(this, data);
 		},
 		function() {},
 		"MIDISender",
