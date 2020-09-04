@@ -166,7 +166,8 @@ import org.json.JSONObject;
             public void onSend(byte[] data, int offset,
                     int count, long timestamp) throws IOException {
                     // parse MIDI or whatever
-                    PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, "String.valueOf(offset)");
+                    PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, String.valueOf(offset));
+                    pluginResult.setKeepCallback(true);
                     MIDISender.this.callbackContext.sendPluginResult(pluginResult);
             }
         }
