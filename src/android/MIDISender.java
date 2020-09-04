@@ -166,7 +166,8 @@ import org.json.JSONObject;
             public void onSend(byte[] data, int offset,
                     int count, long timestamp) throws IOException {
                     // parse MIDI or whatever
-                    MIDISender.this.callbackContext.success(String.valueOf(offset));
+                    PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, String.valueOf(offset));
+                    MIDISender.this.callbackContext.sendPluginResult(pluginResult);
             }
         }
         if(this.info == null) {
@@ -182,6 +183,7 @@ import org.json.JSONObject;
                     MIDISender.this.device = device;
                     MidiOutputPort outputPort = device.openOutputPort(0);
                     PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, device.getInfo().getOutputPortCount());
+                    pluginResult.setKeepCallback(true);
                     MIDISender.this.callbackContext.sendPluginResult(pluginResult);
                     // outputPort.connect(new MyReceiver());
                     // callbackContext.success(String.valueOf(device.getInfo().getOutputPortCount()));
