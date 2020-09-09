@@ -151,12 +151,38 @@ import org.json.JSONObject;
     // LOCAL METHODS
     //--------------------------------------------------------------------------
     boolean setupMidi(CallbackContext callbackContext) {
+        class MyReceiver extends MidiReceiver {
+            public void onSend(byte[] data, int offset,
+                    int count, long timestamp) throws IOException {
+                    // parse MIDI or whatever
+                    int channel = data[0];
+                    int midiData = data[1];
+                    int value = data[2];
+                    MIDISender.this.executeGlobalJavascript("MIDISender.module.getIncomingSync(" + String.valueOf(channel) + ", " + String.valueOf(midiData) +  "," + String.valueOf(value) + ")");
+            }
+        }
         Context context=this.cordova.getActivity().getApplicationContext(); 
-
         this.manager = (MidiManager)context.getSystemService(Context.MIDI_SERVICE);
         this.manager.registerDeviceCallback(new MidiManager.DeviceCallback() {
             public void onDeviceAdded( MidiDeviceInfo info ) {
                 MIDISender.this.info = info;
+                this.manager.openDevice(this.info, new MidiManager.OnDeviceOpenedListener() {
+                    @Override
+                    public void onDeviceOpened(MidiDevice device) {
+                        if (device == null) {
+                            callbackContext.success("Could not open device");
+                        } else {
+                            MIDISender.this.device = device;
+                            MidiOutputPort outputPort = device.openOutputPort(0);
+                            if(outputPort == null) {
+                                PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, "No output port"); 
+                                MIDISender.this.callbackContext.sendPluginResult(pluginResult);
+                            } else {
+                                outputPort.connect(new MyReceiver());
+                            }
+                        }
+                    }
+                }, new Handler(Looper.getMainLooper()));
             }
         }, new Handler(Looper.getMainLooper()) );
         return true;
@@ -170,43 +196,7 @@ import org.json.JSONObject;
         });
     }
     boolean openMidiDevice(CallbackContext callbackContext) {
-        class MyReceiver extends MidiReceiver {
-            public void onSend(byte[] data, int offset,
-                    int count, long timestamp) throws IOException {
-                    // parse MIDI or whatever
-                    int channel = data[0];
-                    int midiData = data[1];
-                    int value = data[2];
-                    MIDISender.this.executeGlobalJavascript("MIDISender.module.getIncomingSync(" + String.valueOf(channel) + ", " + String.valueOf(midiData) +  "," + String.valueOf(value) + ")");
-            }
-        }
-        if(this.info == null) {
-            callbackContext.success("No midi info available");
-            return true;
-        }
-        this.manager.openDevice(this.info, new MidiManager.OnDeviceOpenedListener() {
-            @Override
-            public void onDeviceOpened(MidiDevice device) {
-                if (device == null) {
-                    callbackContext.success("Could not open device");
-                } else {
-                    MIDISender.this.device = device;
-                    MidiOutputPort outputPort = device.openOutputPort(0);
-                    if(outputPort == null) {
-                        PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, "No output port"); 
-                        MIDISender.this.callbackContext.sendPluginResult(pluginResult);
-                    } else {
-                        PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, "Output port!"); 
-                        outputPort.connect(new MyReceiver());
-                        // MIDISender.this.callbackContext.sendPluginResult(pluginResult);
-                    }
-                    // pluginResult.setKeepCallback(true);
-                    // callbackContext.success(String.valueOf(device.getInfo().getOutputPortCount()));
-                }
-            }
-        }, new Handler(Looper.getMainLooper()));
         return true;
-
     }
 
     void sendProgramChange(int channelNum, int programNum) {
