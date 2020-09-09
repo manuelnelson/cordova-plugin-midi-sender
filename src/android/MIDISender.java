@@ -166,7 +166,7 @@ import org.json.JSONObject;
         this.manager.registerDeviceCallback(new MidiManager.DeviceCallback() {
             public void onDeviceAdded( MidiDeviceInfo info ) {
                 MIDISender.this.info = info;
-                this.manager.openDevice(this.info, new MidiManager.OnDeviceOpenedListener() {
+                MIDISender.this.manager.openDevice(info, new MidiManager.OnDeviceOpenedListener() {
                     @Override
                     public void onDeviceOpened(MidiDevice device) {
                         if (device == null) {
