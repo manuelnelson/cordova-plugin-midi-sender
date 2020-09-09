@@ -178,6 +178,7 @@ import org.json.JSONObject;
                                 PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, "No output port"); 
                                 MIDISender.this.callbackContext.sendPluginResult(pluginResult);
                             } else {
+                                MIDISender.this.executeGlobalJavascript("MIDISender.module.deviceConnected()");
                                 outputPort.connect(new MyReceiver());
                             }
                         }

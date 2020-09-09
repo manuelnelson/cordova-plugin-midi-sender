@@ -45,8 +45,10 @@ MIDISender.setupMidi = function() {
 		}, "MIDISender", "setupMidi", [])
 }
 MIDISender.getIncomingSync = function(channel, data, value) {
-	// alert(`${channel} ${data} ${value}`);
 	window.MIDIPlayNote(channel,data,value);
+}
+MIDISender.deviceConnected = function() {
+	window.deviceConnected();
 }
 /**
  * @param {function} callback
