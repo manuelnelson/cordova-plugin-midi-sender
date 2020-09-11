@@ -50,6 +50,9 @@ MIDISender.getIncomingSync = function(channel, data, value) {
 MIDISender.deviceConnected = function() {
 	window.deviceConnected();
 }
+MIDISender.deviceRemoved = function() {
+	window.deviceRemoved();
+}
 /**
  * @param {function} callback
  * @return {void}

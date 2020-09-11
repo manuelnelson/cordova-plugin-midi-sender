@@ -185,6 +185,10 @@ import org.json.JSONObject;
                     }
                 }, new Handler(Looper.getMainLooper()));
             }
+            public void onDeviceRemoved( MidiDeviceInfo info ) {
+                MIDISender.this.executeGlobalJavascript("MIDISender.module.deviceRemoved()");
+            }
+         
         }, new Handler(Looper.getMainLooper()) );
         return true;
     }
