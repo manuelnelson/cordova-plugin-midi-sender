@@ -48,10 +48,12 @@ MIDISender.getIncomingSync = function(channel, data, value) {
 	window.MIDIPlayNote(channel,data,value);
 }
 MIDISender.deviceConnected = function() {
-	window.deviceConnected();
+	if(window.deviceConnected)
+		window.deviceConnected();
 }
 MIDISender.deviceRemoved = function() {
-	window.deviceRemoved();
+	if(window.deviceRemoved)
+		window.deviceRemoved();
 }
 /**
  * @param {function} callback
