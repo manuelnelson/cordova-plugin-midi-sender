@@ -66,7 +66,7 @@ MIDISender.getIncoming = function(callback)
 		{
 			// For Int -> Note value
 			var notes = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
-			
+			console.log('get incoming', data)
 			var dc = parseInt(data.channel);
 			if (dc > 191 &&  dc < 208) { // Program Change
             	data.channel = dc - 192;
