@@ -64,6 +64,7 @@ MIDISender.getIncoming = function(callback)
 	exec(
 		function(data)
 		{
+			alert('what')
 			// For Int -> Note value
 			var notes = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
 			console.log('get incoming', data)
