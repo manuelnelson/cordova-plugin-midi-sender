@@ -100,12 +100,13 @@ NSString* receiveCallbackId;
                        @"value",
                        nil
                    ];
-                   
-                   CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK messageAsDictionary: jsonObj];
-                   
-                   [pluginResult setKeepCallbackAsBool:YES];
+                   [self.commandDelegate evalJs:@"MIDISender.module.getIncomingSync(" + status + ", "+ [NSString stringWithFormat:@"%d", packet->data[j + 1]] + "," +[NSString stringWithFormat:@"%d", packet->data[j + 2]] + ")"];
 
-                   [midiSender.commandDelegate sendPluginResult:pluginResult callbackId:receiveCallbackId];
+                //    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK messageAsDictionary: jsonObj];
+                   
+                //    [pluginResult setKeepCallbackAsBool:YES];
+
+                //    [midiSender.commandDelegate sendPluginResult:pluginResult callbackId:receiveCallbackId];
                }
             }
         }
