@@ -31,7 +31,7 @@ NSString* receiveCallbackId;
     void midiReceive(const MIDIPacketList *list, void *procRef, void *srcRef)
     {
         MIDISender* midiSender = (__bridge MIDISender*)procRef;
-        [midiSender.commandDelegate evalJs:@"alert('testig');"];
+        [midiSender.commandDelegate evalJs:@"alert('testing');"];
 
         for(UInt32 i = 0; i < list->numPackets; i++)
         {
