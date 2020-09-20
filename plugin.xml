@@ -41,7 +41,7 @@
         
         <config-file target="config.xml" parent="/*">
             <feature name="MIDISender">
-                <param name="ios-package" value="com.emmanuelnelson.MIDISender" onload="true" />
+                <param name="ios-package" value="MIDISender" onload="true" />
             </feature>
         </config-file>
         
