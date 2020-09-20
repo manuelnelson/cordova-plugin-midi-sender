@@ -31,7 +31,6 @@ NSString* receiveCallbackId;
     void midiReceive(const MIDIPacketList *list, void *procRef, void *srcRef)
     {
         MIDISender* midiSender = (__bridge MIDISender*)procRef;
-        [midiSender.commandDelegate evalJs:@"alert('testing');"];
 
         for(UInt32 i = 0; i < list->numPackets; i++)
         {
@@ -68,55 +67,45 @@ NSString* receiveCallbackId;
 
                     [midiSender.commandDelegate sendPluginResult:pluginResult callbackId:receiveCallbackId];
                 } else if(status >= 144 && status <= 159){ // Note
-                    UInt8 data = packet->data[j+1];
-                    UInt8 value = packet->data[j+2];
-                    NSString *methodCall = @"MIDISender.module.getIncomingSync(";
-                    NSString *withParams = [methodCall stringByAppendingFormat:@"%d, %d, %d)", status, data,value];
-                   [midiSender.commandDelegate evalJs:withParams];
-                    // // @debug
-                    // //NSLog(@"MIDISender:midiReceive: Note received: status %d on channel %d", packet->data[j + 1], status);
+                    // @debug
+                    //NSLog(@"MIDISender:midiReceive: Note received: status %d on channel %d", packet->data[j + 1], status);
 
-                    // // Create an object with a simple success property.
-                    // NSDictionary *jsonObj = [
-                    //     [NSDictionary alloc] initWithObjectsAndKeys: [NSString stringWithFormat:@"%d", status],
-                    //     @"channel",
-                    //     [NSString stringWithFormat:@"%d", packet->data[j + 1]],
-                    //     @"data",
-                    //     [NSString stringWithFormat:@"%d", packet->data[j + 2]],
-                    //     @"value",
-                    //     nil
-                    // ];
+                    // Create an object with a simple success property.
+                    NSDictionary *jsonObj = [
+                        [NSDictionary alloc] initWithObjectsAndKeys: [NSString stringWithFormat:@"%d", status],
+                        @"channel",
+                        [NSString stringWithFormat:@"%d", packet->data[j + 1]],
+                        @"data",
+                        [NSString stringWithFormat:@"%d", packet->data[j + 2]],
+                        @"value",
+                        nil
+                    ];
                     
-                    // CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK messageAsDictionary: jsonObj];
+                    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK messageAsDictionary: jsonObj];
                     
-                    // [pluginResult setKeepCallbackAsBool:YES];
+                    [pluginResult setKeepCallbackAsBool:YES];
 
-                    // [midiSender.commandDelegate sendPluginResult:pluginResult callbackId:receiveCallbackId];
+                    [midiSender.commandDelegate sendPluginResult:pluginResult callbackId:receiveCallbackId];
                 } else if(status >= 176 && status <= 191){ // CC
                    // @debug
                     //NSLog(@"MIDISender:midiReceive: CC Channel %d Data %d Value %d", status, packet->data[j + 1], packet->data[j + 2]);
 
                    // Create an object with a simple success property.
-//                   NSDictionary *jsonObj = [
-//                       [NSDictionary alloc] initWithObjectsAndKeys: [NSString stringWithFormat:@"%d", status],
-//                       @"channel",
-//                       [NSString stringWithFormat:@"%d", packet->data[j + 1]],
-//                       @"data",
-//                       [NSString stringWithFormat:@"%d", packet->data[j + 2]],
-//                       @"value",
-//                       nil
-//                   ];
-                    UInt8 data = packet->data[j+1];
-                    UInt8 value = packet->data[j+2];
-                    NSString *methodCall = @"MIDISender.module.getIncomingSync(";
-                    NSString *withParams = [methodCall stringByAppendingFormat:@"%d, %d, %d)", status, data,value];
-                   [midiSender.commandDelegate evalJs:withParams];
-
-                //    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK messageAsDictionary: jsonObj];
+                   NSDictionary *jsonObj = [
+                       [NSDictionary alloc] initWithObjectsAndKeys: [NSString stringWithFormat:@"%d", status],
+                       @"channel",
+                       [NSString stringWithFormat:@"%d", packet->data[j + 1]],
+                       @"data",
+                       [NSString stringWithFormat:@"%d", packet->data[j + 2]],
+                       @"value",
+                       nil
+                   ];
                    
-                //    [pluginResult setKeepCallbackAsBool:YES];
+                   CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK messageAsDictionary: jsonObj];
+                   
+                   [pluginResult setKeepCallbackAsBool:YES];
 
-                //    [midiSender.commandDelegate sendPluginResult:pluginResult callbackId:receiveCallbackId];
+                   [midiSender.commandDelegate sendPluginResult:pluginResult callbackId:receiveCallbackId];
                }
             }
         }
@@ -257,39 +246,38 @@ NSString* receiveCallbackId;
             // @debug
             NSLog(@"MIDISender:getIncoming was called");
 
-            MIDICI
             // create the input port
             //[self handleIncoming:list procRef:(void *)procRef srcRef:(void *)srcRef]
-            // OSStatus s = MIDIInputPortCreate(client, CFSTR("MIDISender Input Port"), midiReceive, (__bridge void *)(self), &inputPort);
+            OSStatus s = MIDIInputPortCreate(client, CFSTR("MIDISender Input Port"), midiReceive, (__bridge void *)(self), &inputPort);
 
-            // // @debug
-            // NSLog(@"MIDISender:getIncoming: Creating MIDI input port (errCode=%d)", (int)s);
+            // @debug
+            NSLog(@"MIDISender:getIncoming: Creating MIDI input port (errCode=%d)", (int)s);
             
-            // // attach to all devices for input
-            // ItemCount DeviceCount = MIDIGetNumberOfDevices();
+            // attach to all devices for input
+            ItemCount DeviceCount = MIDIGetNumberOfDevices();
             
-            // // @debug
-            // NSLog(@"MIDISender:getIncoming: %lu MIDI devices found", DeviceCount);
+            // @debug
+            NSLog(@"MIDISender:getIncoming: %lu MIDI devices found", DeviceCount);
 
-            // for(ItemCount i = 0; i < DeviceCount; i++)
-            // {
-            //     MIDIEndpointRef src = MIDIGetSource(i);
-            //     MIDIPortConnectSource(inputPort, src, NULL);
-            // }
+            for(ItemCount i = 0; i < DeviceCount; i++)
+            {
+                MIDIEndpointRef src = MIDIGetSource(i);
+                MIDIPortConnectSource(inputPort, src, NULL);
+            }
             
-            // if(receiveCallbackId == nil)
-            // {
-            //     receiveCallbackId = command.callbackId;
+            if(receiveCallbackId == nil)
+            {
+                receiveCallbackId = command.callbackId;
                 
-            //     // @debug
-            //     NSLog(@"MIDISender:getIncoming: receiveCallbackId has been set to %@", receiveCallbackId);
+                // @debug
+                NSLog(@"MIDISender:getIncoming: receiveCallbackId has been set to %@", receiveCallbackId);
                 
-            //     CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK messageAsString: @"Initialized"];
+                CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK messageAsString: @"Initialized"];
             
-            //     [pluginResult setKeepCallbackAsBool:YES];
+                [pluginResult setKeepCallbackAsBool:YES];
 
-            //     [self.commandDelegate sendPluginResult:pluginResult callbackId:receiveCallbackId];
-            // }
+                [self.commandDelegate sendPluginResult:pluginResult callbackId:receiveCallbackId];
+            }
         }];
     }
 

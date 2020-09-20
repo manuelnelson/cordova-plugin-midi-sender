@@ -8,7 +8,6 @@
     <repo>https://github.com/manuelnelson/cordova-plugin-midi-sender.git</repo>
     <issue>https://github.com/manuelnelson/cordova-plugin-midi-sender/issues</issue>
 	<license>MIT</license>
-	
 	<author>Emmanuel Nelson</author>
     <engines>
         <!--
@@ -42,7 +41,7 @@
         
         <config-file target="config.xml" parent="/*">
             <feature name="MIDISender">
-                <param name="ios-package" value="MIDISender" onload="true" />
+                <param name="ios-package" value="com.emmanuelnelson.MIDISender" onload="true" />
             </feature>
         </config-file>
         

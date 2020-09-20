@@ -64,19 +64,14 @@ MIDISender.getIncoming = function(callback)
 	exec(
 		function(data)
 		{
-			alert('what')
 			// For Int -> Note value
 			var notes = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
-			console.log('get incoming', data)
 			var dc = parseInt(data.channel);
 			if (dc > 191 &&  dc < 208) { // Program Change
             	data.channel = dc - 192;
 				data.type = 'Program Change';
             } else if (dc > 143 &&  dc < 160) { // Note
 				data.channel = dc - 143;
-				var octave = Math.floor(parseInt(data.data) / 12) - 2;
-				var remainder = parseInt(data.data) % 12;
-				data.data = notes[remainder]+octave;
 				data.type = (parseInt(data.value) > 0)? 'Note On': 'Note Off';
 			} else if (dc > 175 && dc < 192) { // CC
 				data.channel = dc - 175;
