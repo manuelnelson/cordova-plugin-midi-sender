@@ -81,7 +81,7 @@ MIDISender.getIncoming = function(callback)
 			{
 				data.channel = dc;
 			}
-			callback.call(this, data);
+			callback.call(this, data.channel,data.data,data.value);
 		},
 		function() {},
 		"MIDISender",
