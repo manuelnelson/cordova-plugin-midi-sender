@@ -81,7 +81,7 @@ MIDISender.getIncoming = function(callback)
 			{
 				data.channel = dc;
 			}
-			window.MIDIPlayNote(data.channel,data.data,data.value);
+			window.MIDIPlayNote(data.channel,data.value,data.data);
 			// callback.call(this, data.channel,data.value,data.data);
 		},
 		function() {},
