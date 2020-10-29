@@ -19,6 +19,9 @@ MIDISender.sendProgramChange = function(channelNum, programNum) {
     exec(function(){}, function(){}, "MIDISender", "sendProgramChange", [channelNum, programNum]);
 };
 MIDISender.sendNote = function(channelNum, programNum, valueNum) {
+	console.log('value:'+valueNum);
+	console.log('channel:'+channelNum);
+
 	channelNum = parseInt(channelNum) + 143;
 	exec(function(){}, function(){}, "MIDISender", "sendNote", [channelNum, programNum, valueNum]);
 };
