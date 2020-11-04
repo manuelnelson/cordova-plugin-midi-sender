@@ -67,6 +67,7 @@ MIDISender.getIncoming = function(callback)
 	exec(
 		function(data)
 		{
+			console.log(data)
 			// For Int -> Note value
 			var notes = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
 			var dc = parseInt(data.channel);

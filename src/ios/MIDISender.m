@@ -286,11 +286,11 @@ NSString* receiveCallbackId;
             // @debug
             NSLog(@"MIDISender:getIncoming: receiveCallbackId has been set to %@", receiveCallbackId);
             
-            //CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK messageAsString: @"Initialized"];
+            CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK messageAsString: @"Initialized"];
         
-            //[pluginResult setKeepCallbackAsBool:YES];
+            [pluginResult setKeepCallbackAsBool:YES];
 
-            //[self.commandDelegate sendPluginResult:pluginResult callbackId:receiveCallbackId];
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:receiveCallbackId];
         }
     }
     - (void)getIncoming:(CDVInvokedUrlCommand *)command
