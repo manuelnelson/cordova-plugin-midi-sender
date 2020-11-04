@@ -24,6 +24,8 @@ NSString* receiveCallbackId;
 @interface MIDISender()
     -(void)sendProgramChange:(CDVInvokedUrlCommand *)command;
     -(void)getIncoming:(CDVInvokedUrlCommand *)command;
+    -(void)scanExistingDevices:(NSTimer *)timer
+
     @property (nonatomic, retain) NSTimer *rescanTimer;
 @end
 
