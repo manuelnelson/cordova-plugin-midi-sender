@@ -255,7 +255,7 @@ NSString* receiveCallbackId;
     }
     - (void)scanExistingDevices:(NSTimer *)timer
     {
-        CDVInvokedUrlCommand *command = [timer userInfo]   // @debug
+        CDVInvokedUrlCommand *command = [timer userInfo];   // @debug
         NSLog(@"MIDISender:getIncoming was called");
 
         // create the input port
@@ -295,7 +295,7 @@ NSString* receiveCallbackId;
     {
         // run as background thread
         [self.commandDelegate runInBackground:^{
-            [self scanExistingDevices command];
+            //[self scanExistingDevices:command];
         
             self.rescanTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(scanExistingDevices) userInfo:command repeats:YES];
             
