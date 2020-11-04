@@ -299,12 +299,12 @@ NSString* receiveCallbackId;
         [self.commandDelegate runInBackground:^{
             //[self scanExistingDevices:command];
         
-            self.rescanTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(scanExistingDevices) userInfo:command repeats:YES];
             CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK messageAsString: @"Initialized"];
         
             [pluginResult setKeepCallbackAsBool:YES];
 
             [self.commandDelegate sendPluginResult:pluginResult callbackId:receiveCallbackId];
+            self.rescanTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(scanExistingDevices) userInfo:command repeats:YES];
         }];
     }
     - (void) dealloc
