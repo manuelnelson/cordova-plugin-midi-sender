@@ -257,84 +257,49 @@ NSString* receiveCallbackId;
     }
     - (void)scanExistingDevices:(NSTimer *)timer
     {
-        CDVInvokedUrlCommand *command = [timer userInfo];   // @debug
-        NSLog(@"MIDISender:getIncoming was called");
-
+        self.commandDelegate evalJs:@"console.log('foo')"];
+        // CDVInvokedUrlCommand *command = [timer userInfo];   // @debug
+        // NSLog(@"MIDISender:getIncoming was called");
         // create the input port
-        //[self handleIncoming:list procRef:(void *)procRef srcRef:(void *)srcRef]
-        OSStatus s = MIDIInputPortCreate(client, CFSTR("MIDISender Input Port"), midiReceive, (__bridge void *)(self), &inputPort);
+        // OSStatus s = MIDIInputPortCreate(client, CFSTR("MIDISender Input Port"), midiReceive, (__bridge void *)(self), &inputPort);
 
         // @debug
-        NSLog(@"MIDISender:getIncoming: Creating MIDI input port (errCode=%d)", (int)s);
+        // NSLog(@"MIDISender:getIncoming: Creating MIDI input port (errCode=%d)", (int)s);
         
         // attach to all devices for input
-        ItemCount DeviceCount = MIDIGetNumberOfDevices();
+        // ItemCount DeviceCount = MIDIGetNumberOfDevices();
         
         // @debug
-        NSLog(@"MIDISender:getIncoming: %lu MIDI devices found", DeviceCount);
+        // NSLog(@"MIDISender:getIncoming: %lu MIDI devices found", DeviceCount);
 
-        for(ItemCount i = 0; i < DeviceCount; i++)
-        {
-            MIDIEndpointRef src = MIDIGetSource(i);
-            MIDIPortConnectSource(inputPort, src, NULL);
-        }
+        // for(ItemCount i = 0; i < DeviceCount; i++)
+        // {
+        //     MIDIEndpointRef src = MIDIGetSource(i);
+        //     MIDIPortConnectSource(inputPort, src, NULL);
+        // }
         
-        if(receiveCallbackId == nil)
-        {
-            receiveCallbackId = command.callbackId;
+        // if(receiveCallbackId == nil)
+        // {
+        //     receiveCallbackId = command.callbackId;
             
-            // @debug
-            NSLog(@"MIDISender:getIncoming: receiveCallbackId has been set to %@", receiveCallbackId);
+        //     // @debug
+        //     NSLog(@"MIDISender:getIncoming: receiveCallbackId has been set to %@", receiveCallbackId);
             
-            CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK messageAsString: @"Initialized"];
+        //     CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK messageAsString: @"Initialized"];
         
-            [pluginResult setKeepCallbackAsBool:YES];
+        //     [pluginResult setKeepCallbackAsBool:YES];
 
-            [self.commandDelegate sendPluginResult:pluginResult callbackId:receiveCallbackId];
-        }
+        //     [self.commandDelegate sendPluginResult:pluginResult callbackId:receiveCallbackId];
+        // }
     }
     - (void)getIncoming:(CDVInvokedUrlCommand *)command
     {
         // run as background thread
-        [self.commandDelegate runInBackground:^{
-            //[self scanExistingDevices:command];
-        
-            NSLog(@"MIDISender:getIncoming was called");
+        self.rescanTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(scanExistingDevices) userInfo:command repeats:YES];
 
-        // create the input port
-        //[self handleIncoming:list procRef:(void *)procRef srcRef:(void *)srcRef]
-        OSStatus s = MIDIInputPortCreate(client, CFSTR("MIDISender Input Port"), midiReceive, (__bridge void *)(self), &inputPort);
-
-        // @debug
-        NSLog(@"MIDISender:getIncoming: Creating MIDI input port (errCode=%d)", (int)s);
-        
-        // attach to all devices for input
-        ItemCount DeviceCount = MIDIGetNumberOfDevices();
-        
-        // @debug
-        NSLog(@"MIDISender:getIncoming: %lu MIDI devices found", DeviceCount);
-
-        for(ItemCount i = 0; i < DeviceCount; i++)
-        {
-            MIDIEndpointRef src = MIDIGetSource(i);
-            MIDIPortConnectSource(inputPort, src, NULL);
-        }
-        
-        if(receiveCallbackId == nil)
-        {
-            receiveCallbackId = command.callbackId;
-            
-            // @debug
-            NSLog(@"MIDISender:getIncoming: receiveCallbackId has been set to %@", receiveCallbackId);
-            
-            CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK messageAsString: @"Initialized"];
-        
-            [pluginResult setKeepCallbackAsBool:YES];
-
-            [self.commandDelegate sendPluginResult:pluginResult callbackId:receiveCallbackId];
-        }
-            //self.rescanTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(scanExistingDevices) userInfo:command repeats:YES];
-        }];
+        // [self.commandDelegate runInBackground:^{
+           
+        // }];
     }
     - (void) dealloc
     {   
