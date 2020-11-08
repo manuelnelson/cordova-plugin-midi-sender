@@ -257,8 +257,11 @@ NSString* receiveCallbackId;
     }
     - (void)scanExistingDevices:(NSTimer *)timer
     {
-        CDVInvokedUrlCommand *command = [timer userInfo];   // @debug
-        [self.commandDelegate evalJs:@"console.log(" + command.callbackId + @")"];
+
+        // CDVInvokedUrlCommand *command = [timer userInfo];   // @debug
+        // NSString* consoleLog = [NSString stringWithFormat:@"console.log( %@ )",command.callbackId];
+        [self.commandDelegate evalJs:@"console.log('foo')"];
+
         // NSLog(@"MIDISender:getIncoming was called");
         // create the input port
         // OSStatus s = MIDIInputPortCreate(client, CFSTR("MIDISender Input Port"), midiReceive, (__bridge void *)(self), &inputPort);
@@ -295,13 +298,10 @@ NSString* receiveCallbackId;
     - (void)getIncoming:(CDVInvokedUrlCommand *)command
     {
         // run as background thread'
-        // [self.commandDelegate evalJs:@"console.log('foo')"];
-        self.rescanTimer = [NSTimer  scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(scanExistingDevices:) userInfo:command repeats:YES];
-
-
-        // [self.commandDelegate runInBackground:^{
+        [self.commandDelegate runInBackground:^{
+            self.rescanTimer = [NSTimer  scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(scanExistingDevices:) userInfo:nil repeats:YES];
            
-        // }];
+        }];
     }
     - (void) dealloc
     {   
