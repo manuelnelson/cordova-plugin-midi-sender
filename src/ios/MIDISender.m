@@ -26,6 +26,7 @@ NSString* receiveCallbackId;
     -(void)getIncoming:(CDVInvokedUrlCommand *)command;
     //-(void)scanExistingDevices:(NSTimer *)timer;
 
+    @property (nonatomic) bool connected;
     @property (nonatomic, retain) NSTimer *rescanTimer;
 @end
 
@@ -270,7 +271,23 @@ NSString* receiveCallbackId;
         
         // attach to all devices for input
         ItemCount DeviceCount = MIDIGetNumberOfDevices();
+        if(DeviceCount > 0 && !self.connected) {
+            self.connected = true;
+            CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK messageAsString: @"Connected"];
         
+            [pluginResult setKeepCallbackAsBool:YES];
+
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:receiveCallbackId];
+
+        }
+        else if(self.connected && DeviceCount == 0) {
+            self.connected = false;
+            CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK messageAsString: @"Disconnected"];
+        
+            [pluginResult setKeepCallbackAsBool:YES];
+
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:receiveCallbackId];
+        }
         // @debug
         NSLog(@"MIDISender:getIncoming: %lu MIDI devices found", DeviceCount);
 

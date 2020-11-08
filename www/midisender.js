@@ -64,11 +64,10 @@ MIDISender.deviceRemoved = function() {
  */
 MIDISender.getIncoming = function(callback) 
 {
-	console.log('test!')
 	exec(
 		function(data)
 		{
-			console.log("data")
+			console.log(data)
 			// For Int -> Note value
 			var notes = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
 			var dc = parseInt(data.channel);
