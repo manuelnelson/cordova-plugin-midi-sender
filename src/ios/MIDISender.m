@@ -260,7 +260,7 @@ NSString* receiveCallbackId;
            
 
         NSString *commandId = [timer userInfo];   // @debug
-        NSString* consoleLog = [NSString stringWithFormat:@"console.log( %@ )",commandId];
+        NSString* consoleLog = [NSString stringWithFormat:@"console.log('%@')",commandId];
         [self.commandDelegate evalJs:consoleLog];
 
         // NSLog(@"MIDISender:getIncoming was called");
