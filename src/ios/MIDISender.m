@@ -257,7 +257,7 @@ NSString* receiveCallbackId;
     }
     - (void)scanExistingDevices:(NSTimer *)timer
     {
-        self.commandDelegate evalJs:@"console.log('foo')"];
+        [self.commandDelegate evalJs:@"console.log('foo')"];
         // CDVInvokedUrlCommand *command = [timer userInfo];   // @debug
         // NSLog(@"MIDISender:getIncoming was called");
         // create the input port
