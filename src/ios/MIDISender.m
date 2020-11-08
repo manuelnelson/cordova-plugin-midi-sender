@@ -259,8 +259,8 @@ NSString* receiveCallbackId;
     {
            
 
-        CDVInvokedUrlCommand *command = [timer userInfo];   // @debug
-        NSString* consoleLog = [NSString stringWithFormat:@"console.log( %@ )",command.callbackId];
+        NSString *commandId = [timer userInfo];   // @debug
+        NSString* consoleLog = [NSString stringWithFormat:@"console.log( %@ )",commandId];
         [self.commandDelegate evalJs:consoleLog];
 
         // NSLog(@"MIDISender:getIncoming was called");
@@ -299,7 +299,7 @@ NSString* receiveCallbackId;
     - (void)getIncoming:(CDVInvokedUrlCommand *)command
     {
         // run as background thread'
-        self.rescanTimer = [NSTimer  scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(scanExistingDevices:) userInfo:command repeats:YES];
+        self.rescanTimer = [NSTimer  scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(scanExistingDevices:) userInfo:command.callbackId repeats:YES];
     }
     - (void) dealloc
     {   
