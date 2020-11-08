@@ -257,10 +257,11 @@ NSString* receiveCallbackId;
     }
     - (void)scanExistingDevices:(NSTimer *)timer
     {
+           
 
-        // CDVInvokedUrlCommand *command = [timer userInfo];   // @debug
-        // NSString* consoleLog = [NSString stringWithFormat:@"console.log( %@ )",command.callbackId];
-        [self.commandDelegate evalJs:@"console.log('foo')"];
+        CDVInvokedUrlCommand *command = [timer userInfo];   // @debug
+        NSString* consoleLog = [NSString stringWithFormat:@"console.log( %@ )",command.callbackId];
+        [self.commandDelegate evalJs:consoleLog];
 
         // NSLog(@"MIDISender:getIncoming was called");
         // create the input port
@@ -299,9 +300,6 @@ NSString* receiveCallbackId;
     {
         // run as background thread'
         self.rescanTimer = [NSTimer  scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(scanExistingDevices:) userInfo:nil repeats:YES];
-        // [self.commandDelegate runInBackground:^{
-           
-        // }];
     }
     - (void) dealloc
     {   
