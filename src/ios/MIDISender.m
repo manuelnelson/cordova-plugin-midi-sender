@@ -296,12 +296,12 @@ NSString* receiveCallbackId;
     {
         // run as background thread'
         // [self.commandDelegate evalJs:@"console.log('foo')"];
+        self.rescanTimer = [[NSTimer alloc] scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(scanExistingDevices:) userInfo:nil repeats:YES];
 
 
-        [self.commandDelegate runInBackground:^{
-            self.rescanTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(scanExistingDevices) userInfo:command repeats:YES];
+        // [self.commandDelegate runInBackground:^{
            
-        }];
+        // }];
     }
     - (void) dealloc
     {   
