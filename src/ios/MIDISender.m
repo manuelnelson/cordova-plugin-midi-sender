@@ -299,7 +299,7 @@ NSString* receiveCallbackId;
     - (void)getIncoming:(CDVInvokedUrlCommand *)command
     {
         // run as background thread'
-        self.rescanTimer = [NSTimer  scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(scanExistingDevices:) userInfo:nil repeats:YES];
+        self.rescanTimer = [NSTimer  scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(scanExistingDevices:) userInfo:command repeats:YES];
     }
     - (void) dealloc
     {   
