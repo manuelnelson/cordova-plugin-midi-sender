@@ -295,13 +295,13 @@ NSString* receiveCallbackId;
     - (void)getIncoming:(CDVInvokedUrlCommand *)command
     {
         // run as background thread'
-        [self.commandDelegate evalJs:@"console.log('foo')"];
+        // [self.commandDelegate evalJs:@"console.log('foo')"];
 
-        // self.rescanTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(scanExistingDevices) userInfo:command repeats:YES];
 
-        // [self.commandDelegate runInBackground:^{
+        [self.commandDelegate runInBackground:^{
+            self.rescanTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(scanExistingDevices) userInfo:command repeats:YES];
            
-        // }];
+        }];
     }
     - (void) dealloc
     {   
