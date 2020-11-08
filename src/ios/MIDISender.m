@@ -24,7 +24,7 @@ NSString* receiveCallbackId;
 @interface MIDISender()
     -(void)sendProgramChange:(CDVInvokedUrlCommand *)command;
     -(void)getIncoming:(CDVInvokedUrlCommand *)command;
-    -(void)scanExistingDevices:(NSTimer *)timer;
+    //-(void)scanExistingDevices:(NSTimer *)timer;
 
     @property (nonatomic, retain) NSTimer *rescanTimer;
 @end
@@ -296,7 +296,7 @@ NSString* receiveCallbackId;
     {
         // run as background thread'
         // [self.commandDelegate evalJs:@"console.log('foo')"];
-        self.rescanTimer = [[NSTimer alloc] scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(scanExistingDevices:) userInfo:nil repeats:YES];
+        self.rescanTimer = [[NSTimer alloc] scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(scanExistingDevices) userInfo:nil repeats:YES];
 
 
         // [self.commandDelegate runInBackground:^{
