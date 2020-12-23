@@ -315,7 +315,7 @@ NSString* receiveCallbackId;
     {
         // run as background thread'
         // [self.commandDelegate runInBackground:^{
-        self.rescanTimer = [NSTimer  scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(scanExistingDevices:) userInfo:command.callbackId repeats:YES];
+        self.rescanTimer = [NSTimer  scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(scanExistingDevices:) userInfo:command.callbackId repeats:YES];
         // }];
     }
     - (void) dealloc

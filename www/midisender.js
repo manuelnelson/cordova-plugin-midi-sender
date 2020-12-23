@@ -8,10 +8,6 @@ var MIDISender = function() {};
  * @param {number} programNum 1-128
  * @return {void}
  */
-MIDISender.greet = function(hi) {
-	// add 192 for the 192-207 program change range
-    cordova.exec(function(){}, function(){}, "MIDISender", "greet", [hi]);
-};
 MIDISender.sendProgramChange = function(channelNum, programNum) {
 	// add 192 for the 192-207 program change range
 	channelNum = parseInt(channelNum) + 191;
@@ -47,9 +43,11 @@ MIDISender.setupMidi = function() {
 			// alert(error)
 		}, "MIDISender", "setupMidi", [])
 }
+//method for android
 MIDISender.getIncomingSync = function(channel, data, value) {
 	window.MIDIPlayNote(channel,data,value);
 }
+//methods for windows
 MIDISender.deviceConnected = function() {
 	if(window.deviceConnected)
 		window.deviceConnected();
@@ -62,12 +60,22 @@ MIDISender.deviceRemoved = function() {
  * @param {function} callback
  * @return {void}
  */
+//method for iOS
 MIDISender.getIncoming = function(callback) 
 {
 	exec(
 		function(data)
 		{
-			console.log(data)
+			if(typeof data === 'string') {
+				if(data == "Connected") {
+					window.deviceConnected();
+				}
+				if(data == "Disconnected") {
+					window.deviceConnected();
+				}
+				return;
+			}
+			// console.log(data)
 			// For Int -> Note value
 			var notes = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
 			var dc = parseInt(data.channel);
