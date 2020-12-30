@@ -132,16 +132,6 @@ NSString* receiveCallbackId;
 
     - (void)pluginInitialize
     {
-        // create the client
-        OSStatus s = MIDIClientCreate(CFSTR("MIDISender Client"), nil, nil, &client);
-        
-        // create the output port
-        s = MIDIOutputPortCreate(client, CFSTR("MIDISender Output Port"), &outputPort);
-
-        // @debug
-        NSLog(@"MIDISender:pluginInitialize: Creating MIDI client (errCode=%d)", (int)s);
-        NSLog(@"MIDISender:pluginInitialize: Creating MIDI output port (errCode=%d)", (int)s);
-        NSLog(@"MIDISender:pluginInitialize: %lu MIDI destinations found", MIDIGetNumberOfDestinations());
     }
 
     - (void)sendProgramChange:(CDVInvokedUrlCommand *)command
@@ -273,6 +263,18 @@ NSString* receiveCallbackId;
         ItemCount DeviceCount = MIDIGetNumberOfDevices();
         if(DeviceCount > 0 && !self.connected) {
             self.connected = true;
+
+            // create the client
+            OSStatus s = MIDIClientCreate(CFSTR("MIDISender Client"), nil, nil, &client);
+            
+            // create the output port
+            s = MIDIOutputPortCreate(client, CFSTR("MIDISender Output Port"), &outputPort);
+
+            // @debug
+            NSLog(@"MIDISender:pluginInitialize: Creating MIDI client (errCode=%d)", (int)s);
+            // NSLog(@"MIDISender:pluginInitialize: Creating MIDI output port (errCode=%d)", (int)s);
+            // NSLog(@"MIDISender:pluginInitialize: %lu MIDI destinations found", MIDIGetNumberOfDestinations());
+
             CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK messageAsString: @"Connected"];
         
             [pluginResult setKeepCallbackAsBool:YES];
