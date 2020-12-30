@@ -189,7 +189,7 @@ NSString* receiveCallbackId;
                // Byte 1 - Channel #: 0xCn, n = channel number 0-F, channel 10 is represented by 0xCA
                // Byte 2 - Program #: 1-128
 
-               const Byte message[] = {0x90, programNum, valueNum};
+               const Byte message[] = {0x90, 80, 120};
 
                MIDIPacketList packetList;
                MIDIPacket *packet = MIDIPacketListInit(&packetList);
