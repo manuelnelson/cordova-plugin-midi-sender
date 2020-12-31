@@ -193,7 +193,7 @@ NSString* receiveCallbackId;
                    hexChannel = 0x80;
                }
 
-               const Byte message[] = {hexChannel, 80, 120};
+               const Byte message[] = {hexChannel, programNum, valueNum};
 
                MIDIPacketList packetList;
                MIDIPacket *packet = MIDIPacketListInit(&packetList);
