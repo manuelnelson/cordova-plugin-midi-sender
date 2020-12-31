@@ -188,8 +188,12 @@ NSString* receiveCallbackId;
                // see: http://www.midi.org/techspecs/midimessages.php
                // Byte 1 - Channel #: 0xCn, n = channel number 0-F, channel 10 is represented by 0xCA
                // Byte 2 - Program #: 1-128
+               int hexChannel = 0x90;
+               if(channelNum != 144) {
+                   hexChannel = 0x80;
+               }
 
-               const Byte message[] = {0x90, 80, 120};
+               const Byte message[] = {hexChannel, 80, 120};
 
                MIDIPacketList packetList;
                MIDIPacket *packet = MIDIPacketListInit(&packetList);
