@@ -15,9 +15,6 @@ MIDISender.sendProgramChange = function(channelNum, programNum) {
     exec(function(){}, function(){}, "MIDISender", "sendProgramChange", [channelNum, programNum]);
 };
 MIDISender.sendNote = function(channelNum, programNum, valueNum) {
-	console.log('value:'+valueNum);
-	console.log('channel:'+channelNum);
-
 	channelNum = parseInt(channelNum);// + 143;
 	exec(function(){}, function(){}, "MIDISender", "sendNote", [channelNum, programNum, valueNum]);
 };
@@ -44,8 +41,9 @@ MIDISender.setupMidi = function() {
 		}, "MIDISender", "setupMidi", [])
 }
 //method for android
-MIDISender.getIncomingSync = function(channel, data, value) {
-	window.MIDIPlayNote(channel,data,value);
+MIDISender.getIncomingSync = function(channel, volume, midiKey) {
+	//for some reason, android volume is -112 (on) or -128 (off)
+	window.MIDIPlayNote(channel,(volume + 127),midiKey);
 }
 //methods for windows
 MIDISender.deviceConnected = function() {
